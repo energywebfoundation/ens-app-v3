@@ -4,15 +4,12 @@ import { Address, Chain, ChainProviderFn, configureChains, createClient } from '
 import { goerli, localhost, mainnet } from 'wagmi/chains'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-
 import { makePersistent } from '@app/utils/persist'
-
 import { WC_PROJECT_ID } from './constants'
 import { getDefaultWallets } from './getDefaultWallets'
 
 const providerArray: ChainProviderFn<typeof mainnet | typeof goerli | typeof localhost>[] = []
 
-const ensAddress: Address = '0x0A6d64413c07E10E890220BBE1c49170080C6Ca0'
 export const ewc: Chain = {
   id: 246,
   name: 'Energy Web Chain',
@@ -34,8 +31,37 @@ export const ewc: Chain = {
   },
   contracts: {
     ensRegistry: {
-      address: ensAddress,
+      address: '0x0A6d64413c07E10E890220BBE1c49170080C6Ca0',
     },
+  },
+}
+
+const volta: Chain = {
+  id: 73799,
+  name: 'Volta Chain',
+  network: 'volta',
+  nativeCurrency: { name: 'VT', symbol: 'VT', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ['https://volta-rpc.energyweb.org'],
+    },
+    public: {
+      http: ['https://volta-rpc.energyweb.org'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Volta Explorer',
+      url: 'https://volta-explorer.energyweb.org',
+    },
+  },
+  contracts: {
+    ensRegistry: {
+      address: '0xd7CeF70Ba7efc2035256d828d5287e2D285CD1ac',
+    },
+    ensUniversalResolver : {
+      address: '0xd4281a0BFd1b336Baf0eCbBF3a552ec9aD0d19dc'
+    }
   },
 }
 
@@ -71,7 +97,12 @@ const ewcProvider = jsonRpcProvider({
     http: 'https://rpc.energyweb.org/',
   }),
 })
-const { provider, chains } = configureChains([ewc], [ewcProvider])
+const voltaProvider = jsonRpcProvider({
+  rpc: () => ({
+    http: 'https://volta-rpc.energyweb.org/',
+  }),
+})
+const { provider, chains } = configureChains([volta], [voltaProvider])
 
 const connectors = getDefaultWallets({
   appName: 'ENS',
@@ -125,3 +156,4 @@ const wagmiClientWithRefetch = createClient({
 })
 
 export { chains, queryClient, wagmiClient, wagmiClientWithRefetch }
+
