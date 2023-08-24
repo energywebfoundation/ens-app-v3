@@ -50,7 +50,8 @@
     "wrangle:list": "wrangler deployments list",
     "generate:sitemaps": "node ./scripts/generate-site-map.mjs",
     "enode": "ganache --wallet.mnemonic=\"test test test test test test test test test test test junk\" --chain.chainId 1337 --chain.networkId 1337 --chain.time 1659500634000",
-    "compose": "cp ./node_modules/@ensdomains/ens-test-env/src/docker-compose.yml ./docker-compose.yml"
+    "compose": "cp ./node_modules/@ensdomains/ens-test-env/src/docker-compose.yml ./docker-compose.yml",
+    "node:hardhat": "npx hardhat --network hardhat node --tags setupEthTld,UniversalResolver,Multicall,getContractAddresses"
   },
   "dependencies": {
     "@ensdomains/address-encoder": "^0.2.21",
@@ -129,6 +130,7 @@
     "@deploysentinel/cypress-debugger": "^0.8.6",
     "@ensdomains/buffer": "^0.1.0",
     "@ensdomains/ens-test-env": "^0.3.7",
+    "@ensdomains/solsha1": "^0.0.3",
     "@ethersproject/wallet": "^5.7.0",
     "@next/bundle-analyzer": "^12.2.5",
     "@next/swc-linux-x64-gnu": "12.1.4",
@@ -178,6 +180,7 @@
     "eslint-plugin-react": "^7.31.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-testing-library": "^4.12.4",
+    "eth-ens-namehash": "^2.0.8",
     "ethers": "^5.7.2",
     "ganache": "^7.4.1",
     "graphql-request": "5.1.0",
@@ -189,6 +192,7 @@
     "jest-canvas-mock": "^2.4.0",
     "jest-environment-jsdom": "^27.5.1",
     "jest-localstorage-mock": "^2.4.22",
+    "js-sha3": "^0.8.0",
     "msw": "^1.2.1",
     "next-compose-plugins": "^2.2.1",
     "next-dev-https": "^0.1.2",

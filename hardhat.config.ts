@@ -3,17 +3,22 @@ import '@nomiclabs/hardhat-ethers'
 import 'dotenv/config'
 import 'hardhat-deploy'
 import { HardhatUserConfig } from 'hardhat/config'
-import { resolve } from 'path'
-
-const ensContractsPath = './node_modules/@ensdomains/ens-contracts'
-
-console.log(resolve(ensContractsPath, 'artifacts'))
 
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
       {
-        version: '0.8.13',
+        version: '0.8.17',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+      // for DummyOldResolver contract
+      {
+        version: '0.4.11',
         settings: {
           optimizer: {
             enabled: true,
@@ -28,11 +33,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       saveDeployments: false,
       chainId: 1337,
-      accounts: {
-        mnemonic: process.env.SECRET_WORDS!,
-      },
       live: false,
-      tags: ['test', 'legacy', 'use_root'],
     },
     localhost: {
       saveDeployments: false,
@@ -42,35 +43,18 @@ const config: HardhatUserConfig = {
         mnemonic: process.env.SECRET_WORDS!,
       },
       live: false,
-      tags: ['test', 'legacy', 'use_root'],
     },
   },
-  // namedAccounts: {
-  //   deployer: {
-  //     default: '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266',
-  //   },
-  // },
   namedAccounts: {
     deployer: {
       default: 0,
     },
     owner: {
-      default: 1,
+      default: 0,
     },
     owner2: {
       default: 2,
     },
-  },
-  external: {
-    contracts: [
-      {
-        artifacts: [
-          resolve(ensContractsPath, 'artifacts'),
-          resolve(ensContractsPath, './deployments/archive'),
-        ],
-        deploy: resolve(ensContractsPath, './build/deploy'),
-      },
-    ],
   },
 }
 

@@ -67,3 +67,6 @@ tsconfig.tsbuildinfo
 .sentryclirc
 
 .dev.vars
+
+deployments/localhost/*
+!deployments/localhost/.chainId
