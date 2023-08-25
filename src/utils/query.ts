@@ -28,6 +28,18 @@ if (!multicall) {
   throw new Error('Multicall is not set')
 }
 
+const contracts = {
+  ensRegistry: {
+    address: ensRegistry,
+  },
+  ensUniversalResolver: {
+    address: universalResolver,
+  },
+  multicall3: {
+    address: multicall,
+  },
+}
+
 export const ewc: Chain = {
   id: 246,
   name: 'Energy Web Chain',
@@ -47,15 +59,11 @@ export const ewc: Chain = {
       url: 'https://explorer.energyweb.org',
     },
   },
-  contracts: {
-    ensRegistry: {
-      address: '0x0A6d64413c07E10E890220BBE1c49170080C6Ca0',
-    },
-  },
+  contracts,
 }
 
 export const volta: Chain = {
-  id: 37799,
+  id: 73799,
   name: 'Volta EnergyWeb Chain',
   network: 'volta',
   nativeCurrency: { name: 'VT', symbol: 'VT', decimals: 18 },
@@ -73,11 +81,7 @@ export const volta: Chain = {
       url: 'http://volta-explorer.energyweb.org',
     },
   },
-  contracts: {
-    ensRegistry: {
-      address: '0xd7CeF70Ba7efc2035256d828d5287e2D285CD1ac',
-    },
-  },
+  contracts,
 }
 
 export const hardhat: Chain = {
@@ -99,17 +103,7 @@ export const hardhat: Chain = {
       url: 'http://explorer.energyweb.org',
     },
   },
-  contracts: {
-    ensRegistry: {
-      address: ensRegistry,
-    },
-    ensUniversalResolver: {
-      address: universalResolver,
-    },
-    multicall3: {
-      address: multicall,
-    },
-  },
+  contracts,
 }
 if (process.env.NEXT_PUBLIC_PROVIDER) {
   // for local testing
@@ -155,7 +149,16 @@ const hardhatProvider = jsonRpcProvider({
     http: 'http://localhost:8545/',
   }),
 })
-const { provider, chains } = configureChains([hardhat], [hardhatProvider])
+const { provider, chains } = configureChains(
+  [
+    volta,
+    // hardhat,
+  ],
+  [
+    voltaProvider,
+    // hardhatProvider,
+  ],
+)
 
 const connectors = getDefaultWallets({
   appName: 'ENS',

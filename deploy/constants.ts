@@ -1,3 +1,5 @@
-export const ETH_NODE = '0x93cdeb708b7545dc668eb9280176169d1c33cfd8ed6f04690a0bcc88a93fc4ae' // namehash('eth')
-export const ETH_LABELHASH = '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0' // keccak256(toUtf8Bytes('eth'))
-// export const ETH_NODE = "\x03eth\x00";
+export const TLD = 'ewc'
+export const TLD_NODE = '0x62678f566401da579f21f5ecc445c98cd2d5f4be167cbd7a7c30ca7ea7bc9848' // namehash('ewc')
+export const TLD_LABELHASH = '0xeac65690d0d181edcf982a98ce812c7f21ecbd484187665865da4b29375ec062' // keccak256(toUtf8Bytes('ewc'))
+
+export const ZERO_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'

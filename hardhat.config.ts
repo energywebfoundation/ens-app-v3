@@ -4,6 +4,11 @@ import 'dotenv/config'
 import 'hardhat-deploy'
 import { HardhatUserConfig } from 'hardhat/config'
 
+const ownerPk = process.env.OWNER_PK
+if (!ownerPk) {
+  throw new Error('Onwer private key was not set')
+}
+
 const config: HardhatUserConfig = {
   solidity: {
     compilers: [
@@ -42,6 +47,13 @@ const config: HardhatUserConfig = {
       accounts: {
         mnemonic: process.env.SECRET_WORDS!,
       },
+      live: false,
+    },
+    volta: {
+      saveDeployments: true,
+      url: 'https://volta-rpc.energyweb.org',
+      chainId: 73799,
+      accounts: [ownerPk, ownerPk],
       live: false,
     },
   },

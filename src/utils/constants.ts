@@ -13,6 +13,7 @@ export const networkName = {
   '3': 'ropsten',
   // eslint-disable-next-line @typescript-eslint/naming-convention
   '1337': 'local',
+  '73799': 'volta',
 }
 
 interface ResolverAddresses {
@@ -48,6 +49,7 @@ export const RESOLVER_ADDRESSES: ResolverAddresses = {
     '0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750', // This is fill in resolver. Not actual contract address
     '0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB',
   ],
+  '73799': ['0x0a97e07c4Df22e2e31872F20C5BE191D5EFc4680'],
 }
 
 export const NAMEWRAPPER_AWARE_RESOLVERS: ResolverAddresses = {
@@ -61,6 +63,7 @@ export const NAMEWRAPPER_AWARE_RESOLVERS: ResolverAddresses = {
   ],
   // eslint-disable-next-line @typescript-eslint/naming-convention
   '1337': ['0x0E801D84Fa97b50751Dbf25036d067dCf18858bF'],
+  '73799': [],
 }
 
 export const RESOLVER_INTERFACE_IDS = {

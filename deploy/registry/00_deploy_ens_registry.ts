@@ -2,10 +2,10 @@ import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 
-const ZERO_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'
+import { ZERO_HASH } from '../constants'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { getNamedAccounts, deployments, network } = hre
+  const { getNamedAccounts, deployments } = hre
   const { deploy } = deployments
   const { deployer, owner } = await getNamedAccounts()
 

@@ -1,15 +1,13 @@
-// import namehash from 'eth-ens-namehash'
 import { Interface } from 'ethers/lib/utils'
 import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 
-import { computeInterfaceId, labelHash } from '../utils'
-
-const { utils } = ethers
-const { namehash } = utils
+import { TLD_LABELHASH, TLD_NODE } from '../constants'
+import { computeInterfaceId } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  console.log('setting up top level domain')
   const { getNamedAccounts, deployments } = hre
   const { owner } = await getNamedAccounts()
 
@@ -20,41 +18,34 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const wrapper = await ethers.getContract('NameWrapper')
   const registrar = await ethers.getContract('BaseRegistrarImplementation')
 
-  // const tx = await root
-  //   .connect(await ethers.getSigner(owner))
-  //   .setSubnodeOwner(labelhash('eth'), registrar.address)
-  // await tx.wait()
-  // console.log(`.eth node created, owner is registrar (tx: ${tx2.hash})...`)
-
-  const tx = await root.setSubnodeOwner(labelHash('eth'), owner)
+  const tx = await root.setSubnodeOwner(TLD_LABELHASH, owner)
   await tx.wait()
-  console.log(`eth node created, owner temporarily set to owner (tx: ${tx.hash})...`)
+  console.log(`tld node created, owner temporarily set to owner (tx: ${tx.hash})...`)
 
-  const tx2 = await registry.setResolver(namehash('eth'), resolver.address)
+  const tx2 = await registry.setResolver(TLD_NODE, resolver.address)
   await tx2.wait()
-  console.log('Resolver of eth tld set to PublicResolver')
+  console.log('Resolver of tld set to PublicResolver')
 
   const controllerArtifact = await deployments.getArtifact('IETHRegistrarController')
-  // const interfaceId = computeInterfaceId(new Interface(artifact.abi))
   const tx3 = await resolver.setInterface(
-    ethers.utils.namehash('eth'),
+    TLD_NODE,
     computeInterfaceId(new Interface(controllerArtifact.abi)),
     controller.address,
   )
   await tx3.wait()
-  console.log('eth tld implements ETHRegistrarController')
+  console.log('tld implements ETHRegistrarController')
 
   const tx4 = await resolver.setInterface(
-    ethers.utils.namehash('eth'),
+    TLD_NODE,
     computeInterfaceId(wrapper.interface),
     wrapper.address,
   )
   await tx4.wait()
-  console.log('eth tld implements NameWrapper')
+  console.log('tld implements NameWrapper')
 
-  const tx6 = await root.setSubnodeOwner(labelHash('eth'), registrar.address)
+  const tx6 = await root.setSubnodeOwner(TLD_LABELHASH, registrar.address)
   await tx6.wait()
-  console.log('Owner of eth tld set to registrar')
+  console.log('Owner of tld set to registrar')
 
   if ((await registry.owner(ethers.utils.namehash('resolver.eth'))) === owner) {
     const pr = (await ethers.getContract('PublicResolver')).connect(await ethers.getSigner(owner))
@@ -76,8 +67,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 func.id = 'setup_base_eth_tld'
 func.tags = ['setupEthTld']
 func.dependencies = [
-  // 'setupRoot',
-  // 'setupBaseRegistrar',
   'Root',
   'PublicResolver',
   'ENSRegistry',

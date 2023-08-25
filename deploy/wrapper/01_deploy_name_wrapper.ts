@@ -1,15 +1,6 @@
-// import { Interface } from 'ethers/lib/utils'
 import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
-
-// const { makeInterfaceId } = require('@openzeppelin/test-helpers')
-//
-// function computeInterfaceId(iface: Interface) {
-//   return makeInterfaceId.ERC165(
-//     Object.values(iface.functions).map((frag) => frag.format('sighash')),
-//   )
-// }
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { getNamedAccounts, deployments, network } = hre
@@ -19,7 +10,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const registry = await ethers.getContract('ENSRegistry', owner)
   const registrar = await ethers.getContract('BaseRegistrarImplementation', owner)
   const metadata = await ethers.getContract('StaticMetadataService', owner)
-  // const resolver = await registry.resolver(ethers.utils.namehash('eth'))
 
   const deployArgs = {
     from: deployer,
@@ -39,26 +29,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Only attempt to make controller etc changes directly on testnets
   if (network.name === 'mainnet') return
 
-  const tx2 = await registrar.addController(nameWrapper.address)
-  console.log(`Adding NameWrapper as controller on registrar (tx: ${tx2.hash})...`)
-  await tx2.wait()
-
-  // const artifact = await deployments.getArtifact('INameWrapper')
-  // const interfaceId = computeInterfaceId(new Interface(artifact.abi))
-  // if (resolver === ethers.constants.AddressZero) {
-  //   console.log(`No resolver set for .eth; not setting interface ${interfaceId} for NameWrapper`)
-  //   return
-  // }
-  // const resolverContract = await ethers.getContractAt('OwnedResolver', resolver)
-  // const tx3 = await resolverContract.setInterface(
-  //   ethers.utils.namehash('eth'),
-  //   interfaceId,
-  //   nameWrapper.address,
-  // )
-  // console.log(
-  //   `Setting NameWrapper interface ID ${interfaceId} on .eth resolver (tx: ${tx3.hash})...`,
-  // )
-  // await tx3.wait()
+  if (network.tags.use_wrap_names) {
+    const tx2 = await registrar.addController(nameWrapper.address)
+    await tx2.wait()
+    console.log(`NameWrapper added to controllers of registrar (tx: ${tx2.hash})...`)
+  }
 }
 
 func.id = 'name-wrapper'
@@ -68,8 +43,6 @@ func.dependencies = [
   'BaseRegistrarImplementation',
   'StaticMetadataService',
   'ReverseRegistrar', // NameWrapper extends ReverseClaimer, which depends on ReverseRegistrar
-  // 'setupReverse',
-  // 'OwnedResolver',
 ]
 
 export default func

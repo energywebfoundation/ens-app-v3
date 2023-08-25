@@ -1,9 +1,8 @@
-import namehash from 'eth-ens-namehash'
 import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 
-// import { keccak256 } from 'js-sha3'
+import { TLD_NODE } from '../constants'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const { getNamedAccounts, deployments } = hre
@@ -18,7 +17,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const deployArgs = {
     from: deployer,
-    args: [registry.address, namehash.hash('eth')],
+    args: [registry.address, TLD_NODE],
     log: true,
   }
 
@@ -33,6 +32,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 func.id = 'registrar'
 func.tags = ['BaseRegistrarImplementation', 'registrar']
-func.dependencies = ['ENSRegistry', 'root']
+func.dependencies = ['ENSRegistry']
 
 export default func

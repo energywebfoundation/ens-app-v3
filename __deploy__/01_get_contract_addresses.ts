@@ -12,14 +12,11 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   await writeFile(
     resolve(__dirname, '../.env.local'),
-    `NEXT_PUBLIC_DEPLOYMENT_ADDRESSES='${JSON.stringify(
-      deploymentAddressMap,
-    )}'\nNEXT_PUBLIC_PROVIDER=http://localhost:8545`,
+    `NEXT_PUBLIC_DEPLOYMENT_ADDRESSES='${JSON.stringify(deploymentAddressMap)}'`,
   )
-  console.log('Wrote contract addresses and provider to .env.local')
+  console.log('Wrote contract addresses to .env.local')
 }
 
 func.runAtTheEnd = true
-func.tags = ['getContractAddresses']
 
 export default func

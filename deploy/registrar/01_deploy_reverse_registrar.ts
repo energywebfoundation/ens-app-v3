@@ -2,11 +2,11 @@ import { namehash } from 'ethers/lib/utils'
 import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
-import { keccak256 } from 'js-sha3'
 
-// import { labelHash } from '../utils'
+import { labelHash } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  console.log('deploy ReverseRegistrar')
   const { getNamedAccounts, deployments, network } = hre
   const { deploy } = deployments
   const { deployer, owner } = await getNamedAccounts()
@@ -35,23 +35,22 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   const tx1 = await root
     .connect(await ethers.getSigner(owner))
-    .setSubnodeOwner('0x' + keccak256('reverse'), owner)
-  // .setSubnodeOwner(labelHash('reverse'), owner)
+    .setSubnodeOwner(labelHash('reverse'), owner)
   await tx1.wait()
   console.log(`Owner of .reverse set to owner (tx: ${tx1.hash})...`)
 
-  const tx2 = await registry.connect(await ethers.getSigner(owner)).setSubnodeOwner(
-    namehash('reverse'),
-    // labelHash('addr'),
-    '0x' + keccak256('addr'),
-    reverseRegistrar.address,
-  )
+  const tx2 = await registry
+    .connect(await ethers.getSigner(owner))
+    .setSubnodeOwner(namehash('reverse'), labelHash('addr'), reverseRegistrar.address)
   await tx2.wait()
   console.log(`Owner of .addr.reverse set to ReverseRegistrar (tx: ${tx2.hash})...`)
 }
 
 func.id = 'reverse-registrar'
 func.tags = ['ReverseRegistrar']
-func.dependencies = ['Root', 'ENSRegistry']
+func.dependencies = [
+  // 'Root',
+  'ENSRegistry',
+]
 
 export default func
