@@ -6,7 +6,6 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 import { labelHash } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  console.log('deploy ReverseRegistrar')
   const { getNamedAccounts, deployments, network } = hre
   const { deploy } = deployments
   const { deployer, owner } = await getNamedAccounts()
