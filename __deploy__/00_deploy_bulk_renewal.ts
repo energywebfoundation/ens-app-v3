@@ -1,10 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { Interface } from '@ethersproject/abi'
+import { TLD_LABELHASH, TLD_NODE } from 'deploy/constants'
 import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
-
-import { namehash } from '@ensdomains/ensjs/utils/normalise'
 
 const { makeInterfaceId } = require('@openzeppelin/test-helpers')
 
@@ -40,16 +39,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   })
 
   console.log('Temporarily setting owner of eth tld to owner ')
-  const tx = await root.setSubnodeOwner(labelHash('eth'), owner)
+  const tx = await root.setSubnodeOwner(TLD_LABELHASH, owner)
   await tx.wait()
 
   console.log('Set default resolver for eth tld to public resolver')
-  const tx111 = await registry.setResolver(namehash('eth'), resolver.address)
+  const tx111 = await registry.setResolver(TLD_NODE, resolver.address)
   await tx111.wait()
 
   console.log('Set interface implementor of eth tld for bulk renewal')
   const tx2 = await resolver.setInterface(
-    ethers.utils.namehash('eth'),
+    TLD_NODE,
     computeInterfaceId(new Interface(bulkRenewal.abi)),
     bulkRenewal.address,
   )
@@ -57,7 +56,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   console.log('Set interface implementor of eth tld for registrar controller')
   const tx3 = await resolver.setInterface(
-    ethers.utils.namehash('eth'),
+    TLD_NODE,
     computeInterfaceId(new Interface(controllerArtifact.abi)),
     controller.address,
   )
@@ -65,7 +64,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
   console.log('Set interface implementor of eth tld for name wrapper')
   const tx4 = await resolver.setInterface(
-    ethers.utils.namehash('eth'),
+    TLD_NODE,
     computeInterfaceId(wrapper.interface),
     wrapper.address,
   )

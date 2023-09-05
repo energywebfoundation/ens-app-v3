@@ -35,5 +35,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 func.id = 'multicall'
-
+func.tags = ['Multicall']
 export default func

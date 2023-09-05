@@ -11,8 +11,35 @@ import { WC_PROJECT_ID } from './constants'
 import { getDefaultWallets } from './getDefaultWallets'
 
 const providerArray: ChainProviderFn<typeof mainnet | typeof goerli | typeof localhost>[] = []
+const NEXT_PUBLIC_DEPLOYMENT_ADDRESSES = process.env.NEXT_PUBLIC_DEPLOYMENT_ADDRESSES
+if (!NEXT_PUBLIC_DEPLOYMENT_ADDRESSES) {
+  throw new Error('Deployment addresses are not set')
+}
+const ensRegistry = JSON.parse(NEXT_PUBLIC_DEPLOYMENT_ADDRESSES).ENSRegistry as Address
+if (!ensRegistry) {
+  throw new Error('ENSRegistry is not set')
+}
+const universalResolver = JSON.parse(NEXT_PUBLIC_DEPLOYMENT_ADDRESSES).UniversalResolver as Address
+if (!universalResolver) {
+  throw new Error('UniversalResolver is not set')
+}
+const multicall = JSON.parse(NEXT_PUBLIC_DEPLOYMENT_ADDRESSES).Multicall as Address
+if (!multicall) {
+  throw new Error('Multicall is not set')
+}
 
-const ensAddress: Address = '0x0A6d64413c07E10E890220BBE1c49170080C6Ca0'
+const contracts = {
+  ensRegistry: {
+    address: ensRegistry,
+  },
+  ensUniversalResolver: {
+    address: universalResolver,
+  },
+  multicall3: {
+    address: multicall,
+  },
+}
+
 export const ewc: Chain = {
   id: 246,
   name: 'Energy Web Chain',
@@ -32,13 +59,52 @@ export const ewc: Chain = {
       url: 'https://explorer.energyweb.org',
     },
   },
-  contracts: {
-    ensRegistry: {
-      address: ensAddress,
-    },
-  },
+  contracts,
 }
 
+export const volta: Chain = {
+  id: 73799,
+  name: 'Volta EnergyWeb Chain',
+  network: 'volta',
+  nativeCurrency: { name: 'VT', symbol: 'VT', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ['https://volta-rpc.energyweb.org/'],
+    },
+    public: {
+      http: ['https://volta-rpc.energyweb.org/'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Volta EnergyWeb Chain Explorer',
+      url: 'http://volta-explorer.energyweb.org',
+    },
+  },
+  contracts,
+}
+
+export const hardhat: Chain = {
+  id: 1337,
+  name: 'localhost',
+  network: 'localhost',
+  nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ['http://localhost:8545/'],
+    },
+    public: {
+      http: ['http://localhost:8545/'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Hardhat',
+      url: 'http://explorer.energyweb.org',
+    },
+  },
+  contracts,
+}
 if (process.env.NEXT_PUBLIC_PROVIDER) {
   // for local testing
   providerArray.push(
@@ -71,7 +137,28 @@ const ewcProvider = jsonRpcProvider({
     http: 'https://rpc.energyweb.org/',
   }),
 })
-const { provider, chains } = configureChains([ewc], [ewcProvider])
+
+const voltaProvider = jsonRpcProvider({
+  rpc: () => ({
+    http: 'https://volta-rpc.energyweb.org/',
+  }),
+})
+
+const hardhatProvider = jsonRpcProvider({
+  rpc: () => ({
+    http: 'http://localhost:8545/',
+  }),
+})
+const { provider, chains } = configureChains(
+  [
+    volta,
+    // hardhat,
+  ],
+  [
+    voltaProvider,
+    // hardhatProvider,
+  ],
+)
 
 const connectors = getDefaultWallets({
   appName: 'ENS',

@@ -1,5 +1,7 @@
 import { useQuery } from 'wagmi'
 
+import { TLD } from '@ensdomains/ensjs/utils/consts'
+
 import { useEns } from '@app/utils/EnsProvider'
 import { useQueryKeys } from '@app/utils/cacheKeyFactory'
 
@@ -28,7 +30,7 @@ const useDNSOwner = (name: string, valid: boolean | undefined) => {
           throw e
         }),
     {
-      enabled: ready && valid && !name?.endsWith('.eth') && name !== 'eth' && name !== '[root]',
+      enabled: ready && valid && !name?.endsWith(`.${TLD}`) && name !== TLD && name !== '[root]',
     },
   )
 

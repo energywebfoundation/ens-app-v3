@@ -73,7 +73,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         value: price,
       },
     )
-    console.log(`Registering name ${label}.eth (tx: ${registerTx.hash})...`)
+    console.log(`Registered name ${label}.eth (tx: ${registerTx.hash})...`)
     await registerTx.wait()
 
     if (subnames) {
