@@ -69,11 +69,4 @@ tsconfig.tsbuildinfo
 .dev.vars
 
 deployments/*
-!deployments/localhost/.chainId
-!deployments/volta/.chainId
-!deployments/volta/BaseRegistrarImplementation.json
-!deployments/volta/ENSRegistry.json
-!deployments/volta/ETHRegistrarController.json
-!deployments/volta/PublicResolver.json
-!deployments/volta/ReverseRegistrar.json
-!deployments/volta/UniversalResolver.json
+!deployments/volta/
