@@ -61,7 +61,7 @@
     "@ensdomains/dnssecoraclejs": "^0.2.7",
     "@ensdomains/ens-contracts": "0.0.16",
     "@ensdomains/ens-validation": "^0.1.0",
-    "@ensdomains/ensjs": "file:.yalc/@ensdomains/ensjs",
+    "@ensdomains/ensjs": "3.0.0-alpha.65",
     "@ensdomains/eth-ens-namehash": "^2.0.15",
     "@ensdomains/thorin": "0.6.41",
     "@ethersproject/abi": "^5.6.4",
@@ -238,7 +238,8 @@
       "react-confetti@6.1.0": "patches/react-confetti@6.1.0.patch",
       "next-dev-https@0.1.2": "patches/next-dev-https@0.1.2.patch",
       "@rainbow-me/rainbowkit@0.12.15": "patches/@rainbow-me__rainbowkit@0.12.15.patch",
-      "@synthetixio/synpress@3.7.1": "patches/@synthetixio__synpress@3.7.1.patch"
+      "@synthetixio/synpress@3.7.1": "patches/@synthetixio__synpress@3.7.1.patch",
+      "@ensdomains/ensjs@3.0.0-alpha.65": "patches/@ensdomains__ensjs@3.0.0-alpha.65.patch"
     }
   }
 }

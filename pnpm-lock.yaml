@@ -20,6 +20,9 @@ overrides:
   wagmi: 0.12.13
 
 patchedDependencies:
+  '@ensdomains/ensjs@3.0.0-alpha.65':
+    hash: 4r4s4zvj3dck3mbqlicjl6vly4
+    path: patches/@ensdomains__ensjs@3.0.0-alpha.65.patch
   '@rainbow-me/rainbowkit@0.12.15':
     hash: ids4vnpwyenrujupancx6kn4ci
     path: patches/@rainbow-me__rainbowkit@0.12.15.patch
@@ -56,8 +59,8 @@ importers:
         specifier: ^0.1.0
         version: 0.1.0
       '@ensdomains/ensjs':
-        specifier: file:.yalc/@ensdomains/ensjs
-        version: file:.yalc/@ensdomains/ensjs(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1)
+        specifier: 3.0.0-alpha.65
+        version: 3.0.0-alpha.65(patch_hash=4r4s4zvj3dck3mbqlicjl6vly4)(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1)
       '@ensdomains/eth-ens-namehash':
         specifier: ^2.0.15
         version: 2.0.15
@@ -2406,6 +2409,53 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  /@ensdomains/ensjs@3.0.0-alpha.65(patch_hash=4r4s4zvj3dck3mbqlicjl6vly4)(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1):
+    resolution: {integrity: sha512-49aV28uoQ4ducM0GAl2HxPHyc0lY3Gd8eAuBJrWnGVJTMBZ5q1wnT0YsSGiPB2VZ2Q07D/5vsP3NzavbpK+jIg==}
+    peerDependencies:
+      '@ethersproject/abi': ^5.6.4
+      '@ethersproject/abstract-provider': ^5.7.0
+      '@ethersproject/abstract-signer': ^5.7.0
+      '@ethersproject/address': ^5.7.0
+      '@ethersproject/bignumber': ^5.7.0
+      '@ethersproject/bytes': ^5.7.0
+      '@ethersproject/contracts': ^5.7.0
+      '@ethersproject/keccak256': ^5.7.0
+      '@ethersproject/providers': ^5.6.8
+      '@ethersproject/solidity': ^5.7.0
+      '@ethersproject/strings': ^5.7.0
+      '@ethersproject/transactions': ^5.7.0
+      '@ethersproject/web': ^5.7.1
+    dependencies:
+      '@adraffy/ens-normalize': 1.9.0
+      '@ensdomains/address-encoder': 0.2.21
+      '@ensdomains/content-hash': 2.5.7
+      '@ensdomains/dnssecoraclejs': 0.2.8
+      '@ethersproject/abi': 5.6.4
+      '@ethersproject/abstract-provider': 5.7.0
+      '@ethersproject/abstract-signer': 5.7.0
+      '@ethersproject/address': 5.7.0
+      '@ethersproject/bignumber': 5.7.0
+      '@ethersproject/bytes': 5.7.0
+      '@ethersproject/contracts': 5.7.0
+      '@ethersproject/keccak256': 5.7.0
+      '@ethersproject/providers': 5.6.8
+      '@ethersproject/solidity': 5.7.0
+      '@ethersproject/strings': 5.7.0
+      '@ethersproject/transactions': 5.7.0
+      '@ethersproject/web': 5.7.1
+      cbor: 8.1.0
+      dns-packet: 5.4.0
+      graphql: 16.7.1
+      graphql-request: 5.1.0(graphql@16.7.1)
+      pako: 2.1.0
+      traverse: 0.6.7
+    transitivePeerDependencies:
+      - bufferutil
+      - encoding
+      - utf-8-validate
+    dev: false
+    patched: true
 
   /@ensdomains/eth-ens-namehash@2.0.15:
     resolution: {integrity: sha512-JRDFP6+Hczb1E0/HhIg0PONgBYasfGfDheujmfxaZaAv/NAH4jE6Kf48WbqfRZdxt4IZI3jl3Ri7sZ1nP09lgw==}
@@ -23420,54 +23470,6 @@ packages:
       immer: 9.0.15
       react: 17.0.2
       use-sync-external-store: 1.2.0(react@17.0.2)
-
-  file:.yalc/@ensdomains/ensjs(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1):
-    resolution: {directory: .yalc/@ensdomains/ensjs, type: directory}
-    id: file:.yalc/@ensdomains/ensjs
-    name: '@ensdomains/ensjs'
-    peerDependencies:
-      '@ethersproject/abi': ^5.6.4
-      '@ethersproject/abstract-provider': ^5.7.0
-      '@ethersproject/abstract-signer': ^5.7.0
-      '@ethersproject/address': ^5.7.0
-      '@ethersproject/bignumber': ^5.7.0
-      '@ethersproject/bytes': ^5.7.0
-      '@ethersproject/contracts': ^5.7.0
-      '@ethersproject/keccak256': ^5.7.0
-      '@ethersproject/providers': ^5.6.8
-      '@ethersproject/solidity': ^5.7.0
-      '@ethersproject/strings': ^5.7.0
-      '@ethersproject/transactions': ^5.7.0
-      '@ethersproject/web': ^5.7.1
-    dependencies:
-      '@adraffy/ens-normalize': 1.9.0
-      '@ensdomains/address-encoder': 0.2.21
-      '@ensdomains/content-hash': 2.5.7
-      '@ensdomains/dnssecoraclejs': 0.2.8
-      '@ethersproject/abi': 5.6.4
-      '@ethersproject/abstract-provider': 5.7.0
-      '@ethersproject/abstract-signer': 5.7.0
-      '@ethersproject/address': 5.7.0
-      '@ethersproject/bignumber': 5.7.0
-      '@ethersproject/bytes': 5.7.0
-      '@ethersproject/contracts': 5.7.0
-      '@ethersproject/keccak256': 5.7.0
-      '@ethersproject/providers': 5.6.8
-      '@ethersproject/solidity': 5.7.0
-      '@ethersproject/strings': 5.7.0
-      '@ethersproject/transactions': 5.7.0
-      '@ethersproject/web': 5.7.1
-      cbor: 8.1.0
-      dns-packet: 5.4.0
-      graphql: 16.7.1
-      graphql-request: 5.1.0(graphql@16.7.1)
-      pako: 2.1.0
-      traverse: 0.6.7
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - utf-8-validate
-    dev: false
 
   github.com/ethereumjs/ethereumjs-abi/ee3994657fa7a427238e6ba92a84d0b529bbcde0:
     resolution: {tarball: https://codeload.github.com/ethereumjs/ethereumjs-abi/tar.gz/ee3994657fa7a427238e6ba92a84d0b529bbcde0}
