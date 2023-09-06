@@ -39,6 +39,7 @@ const config: HardhatUserConfig = {
       saveDeployments: false,
       chainId: 1337,
       live: false,
+      tags: ['use_root'],
     },
     localhost: {
       saveDeployments: false,
@@ -54,7 +55,14 @@ const config: HardhatUserConfig = {
       url: 'https://volta-rpc.energyweb.org',
       chainId: 73799,
       accounts: [ownerPk, ownerPk],
-      live: false,
+      live: true,
+    },
+    ewc: {
+      saveDeployments: true,
+      url: 'https://rpc.energyweb.org',
+      chainId: 246,
+      accounts: [ownerPk, ownerPk],
+      live: true,
     },
   },
   namedAccounts: {
