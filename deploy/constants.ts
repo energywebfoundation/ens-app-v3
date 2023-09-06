@@ -1,0 +1,5 @@
+export const TLD = 'ewc'
+export const TLD_NODE = '0x62678f566401da579f21f5ecc445c98cd2d5f4be167cbd7a7c30ca7ea7bc9848' // namehash('ewc')
+export const TLD_LABELHASH = '0xeac65690d0d181edcf982a98ce812c7f21ecbd484187665865da4b29375ec062' // keccak256(toUtf8Bytes('ewc'))
+
+export const ZERO_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'

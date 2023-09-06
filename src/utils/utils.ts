@@ -1,6 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { toUtf8Bytes } from '@ethersproject/strings/lib/utf8'
 
+import { TLD } from '@ensdomains/ensjs/utils/consts'
 import { AllCurrentFuses } from '@ensdomains/ensjs/utils/fuses'
 
 import {
@@ -78,7 +79,7 @@ export const isBrowser = !!(
 export const checkDNSName = (name: string): boolean => {
   const labels = name?.split('.')
 
-  return !!labels && labels[labels.length - 1] !== 'eth'
+  return !!labels && labels[labels.length - 1] !== TLD
 }
 
 export const checkETH2LDFromName = (name: string) => {

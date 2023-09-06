@@ -15,7 +15,7 @@ import {
   makeRegistrationData,
 } from '@ensdomains/ensjs/utils/registerHelpers'
 
-import { nonceManager } from './.utils/nonceManager'
+import { nonceManager } from './utils'
 
 type Name = {
   name: string
@@ -50,58 +50,58 @@ const names: Name[] = [
       { label: 'xyz', namedOwner: 'deployer' },
     ],
   },
-  {
-    name: 'wrapped-expired-subnames.eth',
-    namedOwner: 'owner',
-    fuses: {
-      named: ['CANNOT_UNWRAP'],
-    },
-    subnames: [
-      {
-        label: 'day-expired',
-        namedOwner: 'owner',
-        // set expiry to 24 hours ago
-        expiry: Math.floor(Date.now() / 1000) - 86400,
-        fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
-      },
-      {
-        label: 'hour-expired',
-        namedOwner: 'owner',
-        // set expiry to 24 hours ago
-        expiry: Math.floor(Date.now() / 1000) - 3600,
-        fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
-      },
-      {
-        label: 'two-minute-expired',
-        namedOwner: 'owner',
-        expiry: Math.floor(Date.now() / 1000) - 120,
-        fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
-      },
-      {
-        label: 'two-minute-expiring',
-        namedOwner: 'owner',
-        expiry: Math.floor(Date.now() / 1000) + 120,
-        fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
-      },
-      {
-        label: 'hour-expiring',
-        namedOwner: 'owner',
-        // set expiry to 24 hours ago
-        expiry: Math.floor(Date.now() / 1000) + 3600,
-        fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
-      },
-      {
-        label: 'no-pcc',
-        namedOwner: 'owner',
-        expiry: Math.floor(Date.now() / 1000) - 86400,
-      },
-      {
-        label: 'not-expired',
-        namedOwner: 'owner',
-        fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
-      },
-    ],
-  },
+  // {
+  //   name: 'wrapped-expired-subnames.eth',
+  //   namedOwner: 'owner',
+  //   fuses: {
+  //     named: ['CANNOT_UNWRAP'],
+  //   },
+  //   subnames: [
+  //     {
+  //       label: 'day-expired',
+  //       namedOwner: 'owner',
+  //       // set expiry to 24 hours ago
+  //       expiry: Math.floor(Date.now() / 1000) - 86400,
+  //       fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
+  //     },
+  //     {
+  //       label: 'hour-expired',
+  //       namedOwner: 'owner',
+  //       // set expiry to 24 hours ago
+  //       expiry: Math.floor(Date.now() / 1000) - 3600,
+  //       fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
+  //     },
+  //     {
+  //       label: 'two-minute-expired',
+  //       namedOwner: 'owner',
+  //       expiry: Math.floor(Date.now() / 1000) - 120,
+  //       fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
+  //     },
+  //     {
+  //       label: 'two-minute-expiring',
+  //       namedOwner: 'owner',
+  //       expiry: Math.floor(Date.now() / 1000) + 120,
+  //       fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
+  //     },
+  //     {
+  //       label: 'hour-expiring',
+  //       namedOwner: 'owner',
+  //       // set expiry to 24 hours ago
+  //       expiry: Math.floor(Date.now() / 1000) + 3600,
+  //       fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
+  //     },
+  //     {
+  //       label: 'no-pcc',
+  //       namedOwner: 'owner',
+  //       expiry: Math.floor(Date.now() / 1000) - 86400,
+  //     },
+  //     {
+  //       label: 'not-expired',
+  //       namedOwner: 'owner',
+  //       fuses: encodeFuses({ parent: { named: ['PARENT_CANNOT_CONTROL'] } }),
+  //     },
+  //   ],
+  // },
   {
     name: 'wrapped-to-delete.eth',
     namedOwner: 'owner',
@@ -242,7 +242,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await network.provider.send('evm_setAutomine', [false])
   await getNonceAndApply('owner', makeCommitment)
   await network.provider.send('evm_mine')
-  const oldTimestamp = (await ethers.provider.getBlock('latest')).timestamp
+  let oldTimestamp = (await ethers.provider.getBlock('latest')).timestamp
   await network.provider.send('evm_setNextBlockTimestamp', [oldTimestamp + 60])
   await network.provider.send('evm_mine')
   await getNonceAndApply('owner', makeRegistration)
@@ -251,15 +251,16 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   await network.provider.send('evm_mine')
 
   await network.provider.send('evm_setAutomine', [true])
-  await network.provider.send('anvil_setBlockTimestampInterval', [1])
+  oldTimestamp = (await ethers.provider.getBlock('latest')).timestamp
+  await network.provider.send('evm_setNextBlockTimestamp', [oldTimestamp + 1])
+  // await network.provider.send('anvil_setBlockTimestampInterval', [1])
   await network.provider.send('evm_mine')
 
   return true
 }
 
 func.id = 'register-wrapped-names'
-func.tags = ['register-wrapped-names']
-func.dependencies = ['ETHRegistrarController']
-func.runAtTheEnd = true
+func.tags = ['registerWrappedNames']
+func.dependencies = ['setupEthTld']
 
 export default func

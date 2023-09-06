@@ -1,0 +1,899 @@
+diff --git a/dist/cjs/contracts/getContractAddress.js b/dist/cjs/contracts/getContractAddress.js
+index 3f448ea026805a9e01ae88241114d08254887c6c..cd6cf674bc9706fd690c0e7fdaba7dc9dfbdfda8 100644
+--- a/dist/cjs/contracts/getContractAddress.js
++++ b/dist/cjs/contracts/getContractAddress.js
+@@ -24,7 +24,8 @@ module.exports = __toCommonJS(getContractAddress_exports);
+ const addresses = {
+   BaseRegistrarImplementation: {
+     "1": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+-    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
++    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
++    "11155111": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
+   },
+   DNSRegistrar: {
+     "1": "0x58774Bb8acD458A640aF0B88238369A167546ef2",
+@@ -32,32 +33,39 @@ const addresses = {
+   },
+   ETHRegistrarController: {
+     "1": "0x253553366Da8546fC250F225fe3d25d0C782303b",
+-    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734"
++    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734",
++    "11155111": "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"
+   },
+   Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11",
+   NameWrapper: {
+     "1": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
+-    "5": "0x114D4603199df73e7D157787f8778E21fCd13066"
++    "5": "0x114D4603199df73e7D157787f8778E21fCd13066",
++    "11155111": "0x0635513f179D50A207757E05759CbD106d7dFcE8"
+   },
+   PublicResolver: {
+     "1": "0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63",
+-    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750"
++    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750",
++    "11155111": "0x8FADE66B79cC9f707aB26799354482EB93a5B7dD"
+   },
+   ENSRegistry: {
+     "1": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
+-    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e"
++    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
++    "11155111": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
+   },
+   ReverseRegistrar: {
+     "1": "0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb",
+-    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856"
++    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856",
++    "11155111": "0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6"
+   },
+   UniversalResolver: {
+     "1": "0xc0497e381f536be9ce14b0dd3817cbcae57d2f62",
+-    "5": "0x56522d00c410a43bffdf00a9a569489297385790"
++    "5": "0x56522d00c410a43bffdf00a9a569489297385790",
++    "11155111": "0x21B000Fd62a880b2125A61e36a284BB757b76025"
+   },
+   BulkRenewal: {
+     "1": "0xa12159e5131b1eEf6B4857EEE3e1954744b5033A",
+-    "5": "0xeA64C81d0d718620daBC02D61f3B255C641f475F"
++    "5": "0xeA64C81d0d718620daBC02D61f3B255C641f475F",
++    "11155111": "0x4EF77b90762Eddb33C8Eba5B5a19558DaE53D7a1"
+   }
+ };
+ const getContractAddress = (networkId) => (contractName) => {
+diff --git a/dist/cjs/functions/commitName.js b/dist/cjs/functions/commitName.js
+index dc448b34ddd68e65a66535e41a4454a65fc30f85..0754b558835baeba2a603817c2b4f2d0046ce8c6 100644
+--- a/dist/cjs/functions/commitName.js
++++ b/dist/cjs/functions/commitName.js
+@@ -21,11 +21,12 @@ __export(commitName_exports, {
+   default: () => commitName_default
+ });
+ module.exports = __toCommonJS(commitName_exports);
++var import_consts = require("../utils/consts");
+ var import_registerHelpers = require("../utils/registerHelpers");
+ var import_wrapper = require("../utils/wrapper");
+ async function commitName_default({ contracts }, name, { resolverAddress, ...params }) {
+   const labels = name.split(".");
+-  if (labels.length !== 2 || labels[1] !== "eth")
++  if (labels.length !== 2 || labels[1] !== import_consts.TLD)
+     throw new Error("Currently only .eth TLD registrations are supported");
+   (0, import_wrapper.wrappedLabelLengthCheck)(labels[0]);
+   const controller = await contracts.getEthRegistrarController();
+diff --git a/dist/cjs/functions/getAvailable.js b/dist/cjs/functions/getAvailable.js
+index 14d1f61a597b3b05824d2a0762e90a28be991166..681b29363213361a4ee9dc3c0eba71287f37825c 100644
+--- a/dist/cjs/functions/getAvailable.js
++++ b/dist/cjs/functions/getAvailable.js
+@@ -21,11 +21,12 @@ __export(getAvailable_exports, {
+   default: () => getAvailable_default
+ });
+ module.exports = __toCommonJS(getAvailable_exports);
++var import_consts = require("../utils/consts");
+ var import_labels = require("../utils/labels");
+ const raw = async ({ contracts }, name) => {
+   const baseRegistrar = await (contracts == null ? void 0 : contracts.getBaseRegistrar());
+   const labels = name.split(".");
+-  if (labels.length !== 2 || labels[1] !== "eth") {
++  if (labels.length !== 2 || labels[1] !== import_consts.TLD) {
+     throw new Error("Currently only .eth names can be checked for availability");
+   }
+   return {
+diff --git a/dist/cjs/functions/getExpiry.js b/dist/cjs/functions/getExpiry.js
+index 61368e03e85bc7bd81893b41724966a9fe749234..9efc57c70cac131e5e66e4b0e812d342c616a069 100644
+--- a/dist/cjs/functions/getExpiry.js
++++ b/dist/cjs/functions/getExpiry.js
+@@ -22,10 +22,11 @@ __export(getExpiry_exports, {
+ });
+ module.exports = __toCommonJS(getExpiry_exports);
+ var import_solidity = require("@ethersproject/solidity");
++var import_consts = require("../utils/consts");
+ var import_normalise = require("../utils/normalise");
+ var import_validation = require("../utils/validation");
+ const getRegistrarExpiry = async ({ contracts, multicallWrapper }, labels) => {
+-  if (labels.length > 2 || labels[1] !== "eth") {
++  if (labels.length > 2 || labels[1] !== import_consts.TLD) {
+     throw new Error("Only .eth names have expiry dates on the registrar");
+   }
+   const baseRegistrar = await (contracts == null ? void 0 : contracts.getBaseRegistrar());
+diff --git a/dist/cjs/functions/getOwner.js b/dist/cjs/functions/getOwner.js
+index 9ae3caa1837f68e844f1516bb4b6d141b846bdea..47719ecbbf8fd2eff20fd772328a2c9dd4e0682e 100644
+--- a/dist/cjs/functions/getOwner.js
++++ b/dist/cjs/functions/getOwner.js
+@@ -27,6 +27,7 @@ var import_labels = require("../utils/labels");
+ var import_normalise = require("../utils/normalise");
+ var import_validation = require("../utils/validation");
+ var import_errors = require("../utils/errors");
++var import_consts = require("../utils/consts");
+ const singleContractOwnerRaw = async ({ contracts }, contract, namehash, labels) => {
+   switch (contract) {
+     case "nameWrapper": {
+@@ -112,7 +113,7 @@ const decode = async ({
+     return;
+   const { contract, skipGraph = true } = options;
+   const labels = name.split(".");
+-  const isEth = labels[labels.length - 1] === "eth";
++  const isEth = labels[labels.length - 1] === import_consts.TLD;
+   const is2LD = labels.length === 2;
+   if (contract || labels.length === 1) {
+     const singleOwner = singleContractOwnerDecode(data);
+diff --git a/dist/cjs/functions/registerName.js b/dist/cjs/functions/registerName.js
+index 590e46becc00836139c8c266286290e77bec0fe4..ad20826bf6aa8d8a43ae73239a738a6f26e18207 100644
+--- a/dist/cjs/functions/registerName.js
++++ b/dist/cjs/functions/registerName.js
+@@ -21,11 +21,12 @@ __export(registerName_exports, {
+   default: () => registerName_default
+ });
+ module.exports = __toCommonJS(registerName_exports);
++var import_consts = require("../utils/consts");
+ var import_registerHelpers = require("../utils/registerHelpers");
+ var import_wrapper = require("../utils/wrapper");
+ async function registerName_default({ contracts }, name, { resolverAddress, value, ...params }) {
+   const labels = name.split(".");
+-  if (labels.length !== 2 || labels[1] !== "eth")
++  if (labels.length !== 2 || labels[1] !== import_consts.TLD)
+     throw new Error("Currently only .eth TLD registrations are supported");
+   (0, import_wrapper.wrappedLabelLengthCheck)(labels[0]);
+   const controller = await contracts.getEthRegistrarController();
+diff --git a/dist/cjs/functions/renewNames.js b/dist/cjs/functions/renewNames.js
+index 779361a5206f16b89a3ad59fc8518f4f483f3e68..fdcacc12414627a62d41a245addef95493041233 100644
+--- a/dist/cjs/functions/renewNames.js
++++ b/dist/cjs/functions/renewNames.js
+@@ -41,7 +41,7 @@ async function renewNames_default({ contracts }, nameOrNames, { duration, value
+   const names = Array.isArray(nameOrNames) ? nameOrNames : [nameOrNames];
+   const labels = names.map((name) => {
+     const label = name.split(".");
+-    if (label.length !== 2 || label[1] !== "eth") {
++    if (label.length !== 2 || label[1] !== import_consts.TLD) {
+       throw new Error("Currently only .eth TLD renewals are supported");
+     }
+     return label[0];
+diff --git a/dist/cjs/functions/supportsTLD.js b/dist/cjs/functions/supportsTLD.js
+index 8a71bf7487e96df23b0aa2598d047f59072e1e33..598fc1e5344a484d4eada6fe99294e4f378c5812 100644
+--- a/dist/cjs/functions/supportsTLD.js
++++ b/dist/cjs/functions/supportsTLD.js
+@@ -22,12 +22,13 @@ __export(supportsTLD_exports, {
+ });
+ module.exports = __toCommonJS(supportsTLD_exports);
+ var import_DNSRegistrar_factory = require("../generated/factories/DNSRegistrar__factory");
++var import_consts = require("../utils/consts");
+ const DNSSEC_CLAIM_INTERFACE_IDS = ["0x2f435428", "0x17d8f49b", "0x1aa2e641"];
+ async function supportsTLD_default({ getOwner, provider }, name) {
+   try {
+     const labels = name.split(".");
+     const tld = labels[labels.length - 1];
+-    if (tld === "eth")
++    if (tld === import_consts.TLD)
+       return true;
+     const tldOwner = await getOwner(tld, { contract: "registry" });
+     if (!(tldOwner == null ? void 0 : tldOwner.owner))
+diff --git a/dist/cjs/functions/transferName.js b/dist/cjs/functions/transferName.js
+index 4766363e9df4bbaba55bed0bead07bafcf88cf6d..a1e4f8e033c16496027e3b77b248ae365e6af730 100644
+--- a/dist/cjs/functions/transferName.js
++++ b/dist/cjs/functions/transferName.js
+@@ -22,6 +22,7 @@ __export(transferName_exports, {
+ });
+ module.exports = __toCommonJS(transferName_exports);
+ var import_solidity = require("@ethersproject/solidity");
++var import_consts = require("../utils/consts");
+ var import_normalise = require("../utils/normalise");
+ async function transferName_default({ contracts, signer }, name, {
+   newOwner,
+@@ -39,7 +40,7 @@ async function transferName_default({ contracts, signer }, name, {
+         signer
+       );
+       const labels = name.split(".");
+-      if (labels.length > 2 || labels[labels.length - 1] !== "eth") {
++      if (labels.length > 2 || labels[labels.length - 1] !== import_consts.TLD) {
+         throw new Error("Invalid name for baseRegistrar");
+       }
+       const tokenId = (0, import_solidity.keccak256)(["string"], [labels[0]]);
+diff --git a/dist/cjs/index.js b/dist/cjs/index.js
+index 0e603e59bb0deecee1ae174b63b541ec3c504a86..541e40628ac54eea1d1aa909697cfe4f7bcfb0a5 100644
+--- a/dist/cjs/index.js
++++ b/dist/cjs/index.js
+@@ -35,9 +35,8 @@ var import_singleCall = __toESM(require("./utils/singleCall"));
+ var import_writeTx = __toESM(require("./utils/writeTx"));
+ const graphURIEndpoints = {
+   1: "https://api.thegraph.com/subgraphs/name/ensdomains/ens",
+-  3: "https://api.thegraph.com/subgraphs/name/ensdomains/ensropsten",
+-  4: "https://api.thegraph.com/subgraphs/name/ensdomains/ensrinkeby",
+-  5: "https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli"
++  5: "https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli",
++  11155111: "https://api.studio.thegraph.com/query/49574/enssepolia/version/latest"
+ };
+ class ENS {
+   constructor(options) {
+diff --git a/dist/cjs/utils/consts.js b/dist/cjs/utils/consts.js
+index faf7738227850e437d3b8d29818e2b663f14f50c..fc59a4ae0551c8ed697268a563a70f02b25037ab 100644
+--- a/dist/cjs/utils/consts.js
++++ b/dist/cjs/utils/consts.js
+@@ -21,10 +21,12 @@ __export(consts_exports, {
+   EMPTY_ADDRESS: () => EMPTY_ADDRESS,
+   MAX_DATE_INT: () => MAX_DATE_INT,
+   MAX_INT_64: () => MAX_INT_64,
+-  MINIMUM_DOT_ETH_CHARS: () => MINIMUM_DOT_ETH_CHARS
++  MINIMUM_DOT_ETH_CHARS: () => MINIMUM_DOT_ETH_CHARS,
++  TLD: () => TLD
+ });
+ module.exports = __toCommonJS(consts_exports);
+ const EMPTY_ADDRESS = "0x0000000000000000000000000000000000000000";
+ const MAX_INT_64 = BigInt("18446744073709551615");
+ const MAX_DATE_INT = 864e13;
+ const MINIMUM_DOT_ETH_CHARS = 3;
++const TLD = "ewc";
+diff --git a/dist/cjs/utils/validation.js b/dist/cjs/utils/validation.js
+index 087957eb50d7174bb23d4cdddad454d43589b0cf..888b9cfc90fad953a55660ffa144b20aad0bda75 100644
+--- a/dist/cjs/utils/validation.js
++++ b/dist/cjs/utils/validation.js
+@@ -54,7 +54,7 @@ const parseInput = (input) => {
+   const normalisedName = isValid ? nameReference : void 0;
+   const labels = nameReference.split(".");
+   const tld = labels[labels.length - 1];
+-  const isETH = tld === "eth";
++  const isETH = tld === import_consts.TLD;
+   const labelDataArray = (0, import_normalise.split)(nameReference);
+   const isShort = (((_a = labelDataArray[0].output) == null ? void 0 : _a.length) || 0) < import_consts.MINIMUM_DOT_ETH_CHARS;
+   if (labels.length === 1) {
+@@ -79,4 +79,4 @@ const parseInput = (input) => {
+     labelDataArray
+   };
+ };
+-const checkIsDotEth = (labels) => labels.length === 2 && labels[1] === "eth";
++const checkIsDotEth = (labels) => labels.length === 2 && labels[1] === import_consts.TLD;
+diff --git a/dist/cjs/utils/wrapper.js b/dist/cjs/utils/wrapper.js
+index 4e8efd3efbe57aad40994367aba3bb69318e907f..a20d05afbb5a1aad72831592605bc6a456ce9658 100644
+--- a/dist/cjs/utils/wrapper.js
++++ b/dist/cjs/utils/wrapper.js
+@@ -26,6 +26,7 @@ __export(wrapper_exports, {
+ module.exports = __toCommonJS(wrapper_exports);
+ var import_bignumber = require("@ethersproject/bignumber");
+ var import_strings = require("@ethersproject/strings");
++var import_consts = require("./consts");
+ const MAX_EXPIRY = import_bignumber.BigNumber.from(2).pow(64).sub(1);
+ const expiryToBigNumber = (expiry, defaultValue = 0) => {
+   if (!expiry)
+@@ -41,7 +42,7 @@ const expiryToBigNumber = (expiry, defaultValue = 0) => {
+ const makeExpiry = async ({ getExpiry }, name, expiry) => {
+   if (expiry)
+     return expiryToBigNumber(expiry);
+-  if (name.endsWith(".eth")) {
++  if (name.endsWith(`.${import_consts.TLD}`)) {
+     const expResponse = await getExpiry(name);
+     if (!(expResponse == null ? void 0 : expResponse.expiry))
+       throw new Error("Couldn't get expiry for name, please provide one.");
+diff --git a/dist/esm/contracts/getContractAddress.mjs b/dist/esm/contracts/getContractAddress.mjs
+index 39c8d2b4fecb42ef27ed6569ca7e95b3bec49e70..d92e442d11a63e4341ff3f9e90cd48fb0d9173e2 100644
+--- a/dist/esm/contracts/getContractAddress.mjs
++++ b/dist/esm/contracts/getContractAddress.mjs
+@@ -2,7 +2,8 @@
+ var addresses = {
+   BaseRegistrarImplementation: {
+     "1": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
+-    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
++    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
++    "11155111": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
+   },
+   DNSRegistrar: {
+     "1": "0x58774Bb8acD458A640aF0B88238369A167546ef2",
+@@ -10,32 +11,39 @@ var addresses = {
+   },
+   ETHRegistrarController: {
+     "1": "0x253553366Da8546fC250F225fe3d25d0C782303b",
+-    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734"
++    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734",
++    "11155111": "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"
+   },
+   Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11",
+   NameWrapper: {
+     "1": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
+-    "5": "0x114D4603199df73e7D157787f8778E21fCd13066"
++    "5": "0x114D4603199df73e7D157787f8778E21fCd13066",
++    "11155111": "0x0635513f179D50A207757E05759CbD106d7dFcE8"
+   },
+   PublicResolver: {
+     "1": "0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63",
+-    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750"
++    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750",
++    "11155111": "0x8FADE66B79cC9f707aB26799354482EB93a5B7dD"
+   },
+   ENSRegistry: {
+     "1": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
+-    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e"
++    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
++    "11155111": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
+   },
+   ReverseRegistrar: {
+     "1": "0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb",
+-    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856"
++    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856",
++    "11155111": "0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6"
+   },
+   UniversalResolver: {
+     "1": "0xc0497e381f536be9ce14b0dd3817cbcae57d2f62",
+-    "5": "0x56522d00c410a43bffdf00a9a569489297385790"
++    "5": "0x56522d00c410a43bffdf00a9a569489297385790",
++    "11155111": "0x21B000Fd62a880b2125A61e36a284BB757b76025"
+   },
+   BulkRenewal: {
+     "1": "0xa12159e5131b1eEf6B4857EEE3e1954744b5033A",
+-    "5": "0xeA64C81d0d718620daBC02D61f3B255C641f475F"
++    "5": "0xeA64C81d0d718620daBC02D61f3B255C641f475F",
++    "11155111": "0x4EF77b90762Eddb33C8Eba5B5a19558DaE53D7a1"
+   }
+ };
+ var getContractAddress = (networkId) => (contractName) => {
+diff --git a/dist/esm/functions/commitName.mjs b/dist/esm/functions/commitName.mjs
+index 0662a2e8da05d722504cb12b0879a5d59a060ef7..849d3ec32c7a8d159de4265a854cc85dea5dacfb 100644
+--- a/dist/esm/functions/commitName.mjs
++++ b/dist/esm/functions/commitName.mjs
+@@ -1,9 +1,10 @@
+ // src/functions/commitName.ts
++import { TLD } from "../utils/consts.mjs";
+ import { makeCommitment } from "../utils/registerHelpers.mjs";
+ import { wrappedLabelLengthCheck } from "../utils/wrapper.mjs";
+ async function commitName_default({ contracts }, name, { resolverAddress, ...params }) {
+   const labels = name.split(".");
+-  if (labels.length !== 2 || labels[1] !== "eth")
++  if (labels.length !== 2 || labels[1] !== TLD)
+     throw new Error("Currently only .eth TLD registrations are supported");
+   wrappedLabelLengthCheck(labels[0]);
+   const controller = await contracts.getEthRegistrarController();
+diff --git a/dist/esm/functions/getAvailable.mjs b/dist/esm/functions/getAvailable.mjs
+index e7254d922c2051aee96bd2eb95a3750b2371b6ce..e048fc08d5d4caddad1b84657fabe917ecb36d34 100644
+--- a/dist/esm/functions/getAvailable.mjs
++++ b/dist/esm/functions/getAvailable.mjs
+@@ -1,9 +1,10 @@
+ // src/functions/getAvailable.ts
++import { TLD } from "../utils/consts.mjs";
+ import { labelhash } from "../utils/labels.mjs";
+ var raw = async ({ contracts }, name) => {
+   const baseRegistrar = await contracts?.getBaseRegistrar();
+   const labels = name.split(".");
+-  if (labels.length !== 2 || labels[1] !== "eth") {
++  if (labels.length !== 2 || labels[1] !== TLD) {
+     throw new Error("Currently only .eth names can be checked for availability");
+   }
+   return {
+diff --git a/dist/esm/functions/getExpiry.mjs b/dist/esm/functions/getExpiry.mjs
+index e51a83cfa25de497383345f514c5504591dc8233..530a4a7ecc7d0e8bc215c2bd307fbf59daf116ad 100644
+--- a/dist/esm/functions/getExpiry.mjs
++++ b/dist/esm/functions/getExpiry.mjs
+@@ -1,9 +1,10 @@
+ // src/functions/getExpiry.ts
+ import { keccak256 as solidityKeccak256 } from "@ethersproject/solidity";
++import { TLD } from "../utils/consts.mjs";
+ import { namehash } from "../utils/normalise.mjs";
+ import { checkIsDotEth } from "../utils/validation.mjs";
+ var getRegistrarExpiry = async ({ contracts, multicallWrapper }, labels) => {
+-  if (labels.length > 2 || labels[1] !== "eth") {
++  if (labels.length > 2 || labels[1] !== TLD) {
+     throw new Error("Only .eth names have expiry dates on the registrar");
+   }
+   const baseRegistrar = await contracts?.getBaseRegistrar();
+diff --git a/dist/esm/functions/getOwner.mjs b/dist/esm/functions/getOwner.mjs
+index 0731c56a75146e536dc61fe139ca8544b4de8a75..78769bbd70b4e846a9928bf9fc39a9d390e8a725 100644
+--- a/dist/esm/functions/getOwner.mjs
++++ b/dist/esm/functions/getOwner.mjs
+@@ -9,6 +9,7 @@ import {
+   getClientErrors,
+   ENSJSError
+ } from "../utils/errors.mjs";
++import { TLD } from "../utils/consts.mjs";
+ var singleContractOwnerRaw = async ({ contracts }, contract, namehash, labels) => {
+   switch (contract) {
+     case "nameWrapper": {
+@@ -93,7 +94,7 @@ var decode = async ({
+     return;
+   const { contract, skipGraph = true } = options;
+   const labels = name.split(".");
+-  const isEth = labels[labels.length - 1] === "eth";
++  const isEth = labels[labels.length - 1] === TLD;
+   const is2LD = labels.length === 2;
+   if (contract || labels.length === 1) {
+     const singleOwner = singleContractOwnerDecode(data);
+diff --git a/dist/esm/functions/registerName.mjs b/dist/esm/functions/registerName.mjs
+index da4c6d2c32a42b240175e863c61ab728b1e476ae..a553571632dbe31ce24c3d38edd9be2dc5dcb53f 100644
+--- a/dist/esm/functions/registerName.mjs
++++ b/dist/esm/functions/registerName.mjs
+@@ -1,11 +1,12 @@
+ // src/functions/registerName.ts
++import { TLD } from "../utils/consts.mjs";
+ import {
+   makeRegistrationData
+ } from "../utils/registerHelpers.mjs";
+ import { wrappedLabelLengthCheck } from "../utils/wrapper.mjs";
+ async function registerName_default({ contracts }, name, { resolverAddress, value, ...params }) {
+   const labels = name.split(".");
+-  if (labels.length !== 2 || labels[1] !== "eth")
++  if (labels.length !== 2 || labels[1] !== TLD)
+     throw new Error("Currently only .eth TLD registrations are supported");
+   wrappedLabelLengthCheck(labels[0]);
+   const controller = await contracts.getEthRegistrarController();
+diff --git a/dist/esm/functions/renewNames.mjs b/dist/esm/functions/renewNames.mjs
+index 16b1e10034201d17d572010a894282232776738d..782ec5e80d6964dd48c2889c77e27815f1625db1 100644
+--- a/dist/esm/functions/renewNames.mjs
++++ b/dist/esm/functions/renewNames.mjs
+@@ -1,5 +1,5 @@
+ // src/functions/renewNames.ts
+-import { MAX_INT_64 } from "../utils/consts.mjs";
++import { MAX_INT_64, TLD } from "../utils/consts.mjs";
+ import { labelhash } from "../utils/labels.mjs";
+ import { namehash } from "../utils/normalise.mjs";
+ async function extendWrappedName({ contracts }, name, options) {
+@@ -18,7 +18,7 @@ async function renewNames_default({ contracts }, nameOrNames, { duration, value
+   const names = Array.isArray(nameOrNames) ? nameOrNames : [nameOrNames];
+   const labels = names.map((name) => {
+     const label = name.split(".");
+-    if (label.length !== 2 || label[1] !== "eth") {
++    if (label.length !== 2 || label[1] !== TLD) {
+       throw new Error("Currently only .eth TLD renewals are supported");
+     }
+     return label[0];
+diff --git a/dist/esm/functions/supportsTLD.mjs b/dist/esm/functions/supportsTLD.mjs
+index bf45b1d687a9daa8f6b6aeff12cfddbbaf6c23c4..caa9f4fed8d123795c9b61efc74627a84df378e0 100644
+--- a/dist/esm/functions/supportsTLD.mjs
++++ b/dist/esm/functions/supportsTLD.mjs
+@@ -1,11 +1,12 @@
+ // src/functions/supportsTLD.ts
+ import { DNSRegistrar__factory } from "../generated/factories/DNSRegistrar__factory.mjs";
++import { TLD } from "../utils/consts.mjs";
+ var DNSSEC_CLAIM_INTERFACE_IDS = ["0x2f435428", "0x17d8f49b", "0x1aa2e641"];
+ async function supportsTLD_default({ getOwner, provider }, name) {
+   try {
+     const labels = name.split(".");
+     const tld = labels[labels.length - 1];
+-    if (tld === "eth")
++    if (tld === TLD)
+       return true;
+     const tldOwner = await getOwner(tld, { contract: "registry" });
+     if (!tldOwner?.owner)
+diff --git a/dist/esm/functions/transferName.mjs b/dist/esm/functions/transferName.mjs
+index 18a4fa413a0cd7d6871fbf4e39cbf57e86403c73..28bff5071f5b76e53108e91d89c6e91f33c7b421 100644
+--- a/dist/esm/functions/transferName.mjs
++++ b/dist/esm/functions/transferName.mjs
+@@ -1,5 +1,6 @@
+ // src/functions/transferName.ts
+ import { keccak256 as solidityKeccak256 } from "@ethersproject/solidity";
++import { TLD } from "../utils/consts.mjs";
+ import { namehash } from "../utils/normalise.mjs";
+ async function transferName_default({ contracts, signer }, name, {
+   newOwner,
+@@ -17,7 +18,7 @@ async function transferName_default({ contracts, signer }, name, {
+         signer
+       );
+       const labels = name.split(".");
+-      if (labels.length > 2 || labels[labels.length - 1] !== "eth") {
++      if (labels.length > 2 || labels[labels.length - 1] !== TLD) {
+         throw new Error("Invalid name for baseRegistrar");
+       }
+       const tokenId = solidityKeccak256(["string"], [labels[0]]);
+diff --git a/dist/esm/index.mjs b/dist/esm/index.mjs
+index 991124a287ef4e7cd476ae13747e2109bdb78ec3..be405e2d2251e3092cda801b868633890eedf16e 100644
+--- a/dist/esm/index.mjs
++++ b/dist/esm/index.mjs
+@@ -6,9 +6,8 @@ import singleCall from "./utils/singleCall.mjs";
+ import writeTx from "./utils/writeTx.mjs";
+ var graphURIEndpoints = {
+   1: "https://api.thegraph.com/subgraphs/name/ensdomains/ens",
+-  3: "https://api.thegraph.com/subgraphs/name/ensdomains/ensropsten",
+-  4: "https://api.thegraph.com/subgraphs/name/ensdomains/ensrinkeby",
+-  5: "https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli"
++  5: "https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli",
++  11155111: "https://api.studio.thegraph.com/query/49574/enssepolia/version/latest"
+ };
+ var ENS = class {
+   options;
+diff --git a/dist/esm/utils/consts.mjs b/dist/esm/utils/consts.mjs
+index 8f27fd53b2b3115437930faddf23433890571ff9..656ff7861722bba622746c73686e33aa1389f940 100644
+--- a/dist/esm/utils/consts.mjs
++++ b/dist/esm/utils/consts.mjs
+@@ -3,9 +3,11 @@ var EMPTY_ADDRESS = "0x0000000000000000000000000000000000000000";
+ var MAX_INT_64 = BigInt("18446744073709551615");
+ var MAX_DATE_INT = 864e13;
+ var MINIMUM_DOT_ETH_CHARS = 3;
++var TLD = "ewc";
+ export {
+   EMPTY_ADDRESS,
+   MAX_DATE_INT,
+   MAX_INT_64,
+-  MINIMUM_DOT_ETH_CHARS
++  MINIMUM_DOT_ETH_CHARS,
++  TLD
+ };
+diff --git a/dist/esm/utils/validation.mjs b/dist/esm/utils/validation.mjs
+index 3289abc8152a301629c896c856965f4dbb1bac6c..7650947690becd551f49fc8f9179e43af810fb81 100644
+--- a/dist/esm/utils/validation.mjs
++++ b/dist/esm/utils/validation.mjs
+@@ -1,5 +1,5 @@
+ // src/utils/validation.ts
+-import { MINIMUM_DOT_ETH_CHARS } from "./consts.mjs";
++import { MINIMUM_DOT_ETH_CHARS, TLD } from "./consts.mjs";
+ import { checkLabel, isEncodedLabelhash, saveName } from "./labels.mjs";
+ import { normalise, split } from "./normalise.mjs";
+ var validateName = (name) => {
+@@ -29,7 +29,7 @@ var parseInput = (input) => {
+   const normalisedName = isValid ? nameReference : void 0;
+   const labels = nameReference.split(".");
+   const tld = labels[labels.length - 1];
+-  const isETH = tld === "eth";
++  const isETH = tld === TLD;
+   const labelDataArray = split(nameReference);
+   const isShort = (labelDataArray[0].output?.length || 0) < MINIMUM_DOT_ETH_CHARS;
+   if (labels.length === 1) {
+@@ -54,7 +54,7 @@ var parseInput = (input) => {
+     labelDataArray
+   };
+ };
+-var checkIsDotEth = (labels) => labels.length === 2 && labels[1] === "eth";
++var checkIsDotEth = (labels) => labels.length === 2 && labels[1] === TLD;
+ export {
+   checkIsDotEth,
+   parseInput,
+diff --git a/dist/esm/utils/wrapper.mjs b/dist/esm/utils/wrapper.mjs
+index 63550f5a58f452a257ccfe891c657cf014d7a110..f4cebe30263ff30fe76c0788364efa94097a79bd 100644
+--- a/dist/esm/utils/wrapper.mjs
++++ b/dist/esm/utils/wrapper.mjs
+@@ -1,6 +1,7 @@
+ // src/utils/wrapper.ts
+ import { BigNumber } from "@ethersproject/bignumber";
+ import { toUtf8Bytes } from "@ethersproject/strings";
++import { TLD } from "./consts.mjs";
+ var MAX_EXPIRY = BigNumber.from(2).pow(64).sub(1);
+ var expiryToBigNumber = (expiry, defaultValue = 0) => {
+   if (!expiry)
+@@ -16,7 +17,7 @@ var expiryToBigNumber = (expiry, defaultValue = 0) => {
+ var makeExpiry = async ({ getExpiry }, name, expiry) => {
+   if (expiry)
+     return expiryToBigNumber(expiry);
+-  if (name.endsWith(".eth")) {
++  if (name.endsWith(`.${TLD}`)) {
+     const expResponse = await getExpiry(name);
+     if (!expResponse?.expiry)
+       throw new Error("Couldn't get expiry for name, please provide one.");
+diff --git a/dist/types/contracts/types.d.ts b/dist/types/contracts/types.d.ts
+index 73888516bf1fc63986883742b937110962922c83..c3a8c571ad69ab0306ab124eaaca9e03c7652e8e 100644
+--- a/dist/types/contracts/types.d.ts
++++ b/dist/types/contracts/types.d.ts
+@@ -1,2 +1,2 @@
+-export declare type SupportedNetworkId = '1' | '3' | '4' | '5' | '1337';
++export declare type SupportedNetworkId = '1' | '5' | '11155111' | '1337';
+ export declare type ContractName = 'BaseRegistrarImplementation' | 'ETHRegistrarController' | 'Multicall' | 'NameWrapper' | 'DNSRegistrar' | 'PublicResolver' | 'ENSRegistry' | 'ReverseRegistrar' | 'UniversalResolver' | 'BulkRenewal';
+diff --git a/dist/types/utils/consts.d.ts b/dist/types/utils/consts.d.ts
+index a438ff78ed8909a965e52d86d40353ed71350f83..f4f449507842866becdbd6e84bc9cab4e7370210 100644
+--- a/dist/types/utils/consts.d.ts
++++ b/dist/types/utils/consts.d.ts
+@@ -2,3 +2,4 @@ export declare const EMPTY_ADDRESS = "0x0000000000000000000000000000000000000000
+ export declare const MAX_INT_64: bigint;
+ export declare const MAX_DATE_INT = 8640000000000000;
+ export declare const MINIMUM_DOT_ETH_CHARS = 3;
++export declare const TLD = "ewc";
+diff --git a/src/contracts/getContractAddress.ts b/src/contracts/getContractAddress.ts
+index feb39779f4bbdaac41faadc9681d71cc93b44b8d..ffd380f6abee0d05f31ffc85237a6ceefd8e61c6 100644
+--- a/src/contracts/getContractAddress.ts
++++ b/src/contracts/getContractAddress.ts
+@@ -8,6 +8,7 @@ const addresses: Record<
+   BaseRegistrarImplementation: {
+     '1': '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
+     '5': '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
++    '11155111': '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
+   },
+   DNSRegistrar: {
+     '1': '0x58774Bb8acD458A640aF0B88238369A167546ef2',
+@@ -16,31 +17,38 @@ const addresses: Record<
+   ETHRegistrarController: {
+     '1': '0x253553366Da8546fC250F225fe3d25d0C782303b',
+     '5': '0xCc5e7dB10E65EED1BBD105359e7268aa660f6734',
++    '11155111': '0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72',
+   },
+   Multicall: '0xcA11bde05977b3631167028862bE2a173976CA11',
+   NameWrapper: {
+     '1': '0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401',
+     '5': '0x114D4603199df73e7D157787f8778E21fCd13066',
++    '11155111': '0x0635513f179D50A207757E05759CbD106d7dFcE8',
+   },
+   PublicResolver: {
+     '1': '0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63',
+     '5': '0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750',
++    '11155111': '0x8FADE66B79cC9f707aB26799354482EB93a5B7dD',
+   },
+   ENSRegistry: {
+     '1': '0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e',
+     '5': '0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e',
++    '11155111': '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+   },
+   ReverseRegistrar: {
+     '1': '0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb',
+     '5': '0x4f7A657451358a22dc397d5eE7981FfC526cd856',
++    '11155111': '0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6',
+   },
+   UniversalResolver: {
+     '1': '0xc0497e381f536be9ce14b0dd3817cbcae57d2f62',
+     '5': '0x56522d00c410a43bffdf00a9a569489297385790',
++    '11155111': '0x21B000Fd62a880b2125A61e36a284BB757b76025',
+   },
+   BulkRenewal: {
+     '1': '0xa12159e5131b1eEf6B4857EEE3e1954744b5033A',
+     '5': '0xeA64C81d0d718620daBC02D61f3B255C641f475F',
++    '11155111': '0x4EF77b90762Eddb33C8Eba5B5a19558DaE53D7a1',
+   },
+   /* eslint-enable @typescript-eslint/naming-convention */
+ }
+diff --git a/src/contracts/types.ts b/src/contracts/types.ts
+index 41e9634354896195833d93e8c8a1dce9564ea95d..118dec2ad70386d4c33de6b57e90ae7e61915b14 100644
+--- a/src/contracts/types.ts
++++ b/src/contracts/types.ts
+@@ -1,4 +1,4 @@
+-export type SupportedNetworkId = '1' | '3' | '4' | '5' | '1337'
++export type SupportedNetworkId = '1' | '5' | '11155111' | '1337'
+ 
+ export type ContractName =
+   | 'BaseRegistrarImplementation'
+diff --git a/src/functions/commitName.ts b/src/functions/commitName.ts
+index 35d1fbb408135f35b664c5f8201ff92172a5a21d..263e4109baaeba6b3c10e2d3f5b73079ddd40109 100644
+--- a/src/functions/commitName.ts
++++ b/src/functions/commitName.ts
+@@ -1,4 +1,5 @@
+ import { ENSArgs } from '..'
++import { TLD } from '../utils/consts'
+ import { CommitmentParams, makeCommitment } from '../utils/registerHelpers'
+ import { wrappedLabelLengthCheck } from '../utils/wrapper'
+ 
+@@ -12,7 +13,7 @@ export default async function (
+   { resolverAddress, ...params }: Params,
+ ) {
+   const labels = name.split('.')
+-  if (labels.length !== 2 || labels[1] !== 'eth')
++  if (labels.length !== 2 || labels[1] !== TLD)
+     throw new Error('Currently only .eth TLD registrations are supported')
+ 
+   wrappedLabelLengthCheck(labels[0])
+diff --git a/src/functions/deleteSubname.test.ts b/src/functions/deleteSubname.test.ts
+index acb7c02a33df91ace7369db7f6777909d58e444e..afe10c140355c4848f6efa3b035171f4f1cbe0bc 100644
+--- a/src/functions/deleteSubname.test.ts
++++ b/src/functions/deleteSubname.test.ts
+@@ -1,6 +1,7 @@
+ import { ethers } from 'ethers'
+ import { ENS } from '..'
+ import setup from '../tests/setup'
++import { TLD } from '../utils/consts'
+ import { namehash } from '../utils/normalise'
+ 
+ let ensInstance: ENS
+@@ -183,7 +184,7 @@ describe('deleteSubname', () => {
+ 
+   it('should not allow deleting 1LD', async () => {
+     await expect(
+-      ensInstance.deleteSubname('eth', {
++      ensInstance.deleteSubname(TLD, {
+         contract: 'nameWrapper',
+         method: 'setRecord',
+         addressOrIndex: 1,
+diff --git a/src/functions/getAvailable.ts b/src/functions/getAvailable.ts
+index 0a99ba495e2b02a51e701d268a6ab30b15093e99..a4034d12ad5a11b7230bd0e4665c2c68c7868993 100644
+--- a/src/functions/getAvailable.ts
++++ b/src/functions/getAvailable.ts
+@@ -1,11 +1,12 @@
+ import { ENSArgs } from '..'
++import { TLD } from '../utils/consts'
+ import { labelhash } from '../utils/labels'
+ 
+ const raw = async ({ contracts }: ENSArgs<'contracts'>, name: string) => {
+   const baseRegistrar = await contracts?.getBaseRegistrar()!
+ 
+   const labels = name.split('.')
+-  if (labels.length !== 2 || labels[1] !== 'eth') {
++  if (labels.length !== 2 || labels[1] !== TLD) {
+     throw new Error('Currently only .eth names can be checked for availability')
+   }
+ 
+diff --git a/src/functions/getExpiry.ts b/src/functions/getExpiry.ts
+index 03494d241c282a7f276284525a480b806a3795fc..29fac00990fb43ae5fff27b8ccf588457c544ee1 100644
+--- a/src/functions/getExpiry.ts
++++ b/src/functions/getExpiry.ts
+@@ -1,6 +1,7 @@
+ import { BigNumber } from '@ethersproject/bignumber'
+ import { keccak256 as solidityKeccak256 } from '@ethersproject/solidity'
+ import { ENSArgs } from '..'
++import { TLD } from '../utils/consts'
+ import { namehash } from '../utils/normalise'
+ import { checkIsDotEth } from '../utils/validation'
+ 
+@@ -14,7 +15,7 @@ const getRegistrarExpiry = async (
+   { contracts, multicallWrapper }: ENSArgs<'contracts' | 'multicallWrapper'>,
+   labels: string[],
+ ) => {
+-  if (labels.length > 2 || labels[1] !== 'eth') {
++  if (labels.length > 2 || labels[1] !== TLD) {
+     throw new Error('Only .eth names have expiry dates on the registrar')
+   }
+ 
+diff --git a/src/functions/getOwner.ts b/src/functions/getOwner.ts
+index 4a78b06a38b8e528d7cad08f566b629ef4409cab..c9ffc793ae24b42345095aff9e81f4e4bdfdfe01 100644
+--- a/src/functions/getOwner.ts
++++ b/src/functions/getOwner.ts
+@@ -11,6 +11,7 @@ import {
+   getClientErrors,
+   ENSJSError,
+ } from '../utils/errors'
++import { TLD } from '../utils/consts'
+ 
+ export type Owner = {
+   registrant?: string
+@@ -138,7 +139,7 @@ const decode = async (
+   const { contract, skipGraph = true } = options
+ 
+   const labels = name.split('.')
+-  const isEth = labels[labels.length - 1] === 'eth'
++  const isEth = labels[labels.length - 1] === TLD
+   const is2LD = labels.length === 2
+ 
+   if (contract || labels.length === 1) {
+diff --git a/src/functions/registerName.ts b/src/functions/registerName.ts
+index b759e8272651ce5a2e6e524ddad9b8449c2abf63..1f3134dfcdd50c6c7e0edf9f1e6cef2a5fd60ea8 100644
+--- a/src/functions/registerName.ts
++++ b/src/functions/registerName.ts
+@@ -1,5 +1,6 @@
+ import { BigNumber } from '@ethersproject/bignumber'
+ import { ENSArgs } from '..'
++import { TLD } from '../utils/consts'
+ import {
+   BaseRegistrationParams,
+   makeRegistrationData,
+@@ -16,7 +17,7 @@ export default async function (
+   { resolverAddress, value, ...params }: Params,
+ ) {
+   const labels = name.split('.')
+-  if (labels.length !== 2 || labels[1] !== 'eth')
++  if (labels.length !== 2 || labels[1] !== TLD)
+     throw new Error('Currently only .eth TLD registrations are supported')
+ 
+   wrappedLabelLengthCheck(labels[0])
+diff --git a/src/functions/renewNames.ts b/src/functions/renewNames.ts
+index a33ff88dfb59391dd7b361f113366f6cf8001b35..748072e1ad4575f5cadb2b1cc892ac4f48676f41 100644
+--- a/src/functions/renewNames.ts
++++ b/src/functions/renewNames.ts
+@@ -1,6 +1,6 @@
+ import { BigNumber, BigNumberish } from '@ethersproject/bignumber'
+ import { ENSArgs } from '..'
+-import { MAX_INT_64 } from '../utils/consts'
++import { MAX_INT_64, TLD } from '../utils/consts'
+ import { labelhash } from '../utils/labels'
+ import { namehash } from '../utils/normalise'
+ 
+@@ -39,7 +39,7 @@ export default async function (
+   const names = Array.isArray(nameOrNames) ? nameOrNames : [nameOrNames]
+   const labels = names.map((name) => {
+     const label = name.split('.')
+-    if (label.length !== 2 || label[1] !== 'eth') {
++    if (label.length !== 2 || label[1] !== TLD) {
+       throw new Error('Currently only .eth TLD renewals are supported')
+     }
+     return label[0]
+diff --git a/src/functions/supportsTLD.ts b/src/functions/supportsTLD.ts
+index 90d3fa10d528fad56a64317574c962a041302605..c56f66e3e36c444bf8ea7594e53f8254eb08232a 100644
+--- a/src/functions/supportsTLD.ts
++++ b/src/functions/supportsTLD.ts
+@@ -1,5 +1,6 @@
+ import { DNSRegistrar__factory } from '../generated/factories/DNSRegistrar__factory'
+ import { ENSArgs } from '..'
++import { TLD } from '../utils/consts'
+ 
+ /*
+  * 0x2f435428 -> interfaceId for latest IDNSRegistrar
+@@ -15,7 +16,7 @@ export default async function (
+     const labels = name.split('.')
+     const tld = labels[labels.length - 1]
+ 
+-    if (tld === 'eth') return true
++    if (tld === TLD) return true
+ 
+     const tldOwner = await getOwner(tld, { contract: 'registry' })
+     if (!tldOwner?.owner) return false
+diff --git a/src/functions/transferName.ts b/src/functions/transferName.ts
+index cd930586e169a6b43c7c0b5341f5095a90c91c87..3e777ae8bd106c6766f480ff685fc8c652da526d 100644
+--- a/src/functions/transferName.ts
++++ b/src/functions/transferName.ts
+@@ -1,5 +1,6 @@
+ import { keccak256 as solidityKeccak256 } from '@ethersproject/solidity'
+ import { ENSArgs } from '..'
++import { TLD } from '../utils/consts'
+ import { namehash } from '../utils/normalise'
+ 
+ export default async function (
+@@ -27,7 +28,7 @@ export default async function (
+         signer,
+       )
+       const labels = name.split('.')
+-      if (labels.length > 2 || labels[labels.length - 1] !== 'eth') {
++      if (labels.length > 2 || labels[labels.length - 1] !== TLD) {
+         throw new Error('Invalid name for baseRegistrar')
+       }
+       const tokenId = solidityKeccak256(['string'], [labels[0]])
+diff --git a/src/index.ts b/src/index.ts
+index da7101deaf49f5f097e08835605771ecbf15b079..2ab2691de8073c5a0669b25a500223923889dad4 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -78,9 +78,9 @@ interface WriteFunction<F extends (...args: any) => any> extends Function {
+ /* eslint-disable @typescript-eslint/naming-convention */
+ export const graphURIEndpoints: Record<string, string> = {
+   1: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+-  3: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensropsten',
+-  4: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensrinkeby',
+   5: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli',
++  11155111:
++    'https://api.studio.thegraph.com/query/49574/enssepolia/version/latest',
+ }
+ /* eslint-enable @typescript-eslint/naming-convention */
+ 
+diff --git a/src/utils/consts.ts b/src/utils/consts.ts
+index faf5c371bf14f382e1735050febe23e11e19ac5d..3b653ce7416c72176c88c8813fbbbae203f9aa3e 100644
+--- a/src/utils/consts.ts
++++ b/src/utils/consts.ts
+@@ -2,3 +2,4 @@ export const EMPTY_ADDRESS = '0x0000000000000000000000000000000000000000'
+ export const MAX_INT_64 = BigInt('18446744073709551615')
+ export const MAX_DATE_INT = 8640000000000000
+ export const MINIMUM_DOT_ETH_CHARS = 3
++export const TLD = 'ewc'
+diff --git a/src/utils/validation.ts b/src/utils/validation.ts
+index 10ba29a1ca151261c2875cdc51a589f00b6130b9..999f09c892c5ff6cc55aa98a0c169410d2baf29b 100644
+--- a/src/utils/validation.ts
++++ b/src/utils/validation.ts
+@@ -1,4 +1,4 @@
+-import { MINIMUM_DOT_ETH_CHARS } from './consts'
++import { MINIMUM_DOT_ETH_CHARS, TLD } from './consts'
+ import { checkLabel, isEncodedLabelhash, saveName } from './labels'
+ import { Label, normalise, split } from './normalise'
+ 
+@@ -42,7 +42,7 @@ export const parseInput = (input: string): ParsedInputResult => {
+ 
+   const labels = nameReference.split('.')
+   const tld = labels[labels.length - 1]
+-  const isETH = tld === 'eth'
++  const isETH = tld === TLD
+   const labelDataArray = split(nameReference)
+   const isShort =
+     (labelDataArray[0].output?.length || 0) < MINIMUM_DOT_ETH_CHARS
+@@ -72,4 +72,4 @@ export const parseInput = (input: string): ParsedInputResult => {
+ }
+ 
+ export const checkIsDotEth = (labels: string[]) =>
+-  labels.length === 2 && labels[1] === 'eth'
++  labels.length === 2 && labels[1] === TLD
+diff --git a/src/utils/wrapper.ts b/src/utils/wrapper.ts
+index 20b120e5786af3c53b340310c7be7ab8990481ac..5d4c20b808aff03ebd19ceae8a1418edc368af55 100644
+--- a/src/utils/wrapper.ts
++++ b/src/utils/wrapper.ts
+@@ -1,6 +1,7 @@
+ import { BigNumber } from '@ethersproject/bignumber'
+ import { toUtf8Bytes } from '@ethersproject/strings'
+ import { ENSArgs } from '../index'
++import { TLD } from './consts'
+ 
+ export type Expiry = string | number | Date | BigNumber
+ 
+@@ -23,7 +24,7 @@ export const makeExpiry = async (
+   expiry?: Expiry,
+ ) => {
+   if (expiry) return expiryToBigNumber(expiry)
+-  if (name.endsWith('.eth')) {
++  if (name.endsWith(`.${TLD}`)) {
+     const expResponse = await getExpiry(name)
+     if (!expResponse?.expiry)
+       throw new Error("Couldn't get expiry for name, please provide one.")
