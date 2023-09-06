@@ -12,8 +12,9 @@ export const networkName = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   '3': 'ropsten',
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  '1337': 'local',
+  '1337': 'hardhat',
   '73799': 'volta',
+  '246': 'ewc',
 }
 
 interface ResolverAddresses {
@@ -50,6 +51,7 @@ export const RESOLVER_ADDRESSES: ResolverAddresses = {
     '0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB',
   ],
   '73799': ['0x0a97e07c4Df22e2e31872F20C5BE191D5EFc4680'],
+  '246': ['0xA517983Bd4Af4DF0Ed9b52DA4BC405d0A95eE7E2'],
 }
 
 export const NAMEWRAPPER_AWARE_RESOLVERS: ResolverAddresses = {
@@ -64,6 +66,7 @@ export const NAMEWRAPPER_AWARE_RESOLVERS: ResolverAddresses = {
   // eslint-disable-next-line @typescript-eslint/naming-convention
   '1337': ['0x0E801D84Fa97b50751Dbf25036d067dCf18858bF'],
   '73799': [],
+  '246': [],
 }
 
 export const RESOLVER_INTERFACE_IDS = {

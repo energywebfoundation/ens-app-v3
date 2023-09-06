@@ -150,14 +150,8 @@ const hardhatProvider = jsonRpcProvider({
   }),
 })
 const { provider, chains } = configureChains(
-  [
-    volta,
-    // hardhat,
-  ],
-  [
-    voltaProvider,
-    // hardhatProvider,
-  ],
+  [volta, ewc, hardhat],
+  [voltaProvider, ewcProvider, hardhatProvider],
 )
 
 const connectors = getDefaultWallets({
