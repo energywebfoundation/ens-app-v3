@@ -3,6 +3,7 @@ import { ethers } from 'hardhat'
 import { DeployFunction } from 'hardhat-deploy/types'
 import { HardhatRuntimeEnvironment } from 'hardhat/types'
 
+import { ZERO_HASH } from '../constants'
 import { labelHash } from '../utils'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
@@ -30,13 +31,20 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   // Only attempt to make controller etc changes directly on testnets
   if (network.name === 'mainnet') return
 
-  const root = await ethers.getContract('Root')
+  if (network.tags.use_root) {
+    const root = await ethers.getContract('Root')
 
-  const tx1 = await root
-    .connect(await ethers.getSigner(owner))
-    .setSubnodeOwner(labelHash('reverse'), owner)
-  await tx1.wait()
-  console.log(`Owner of .reverse set to owner (tx: ${tx1.hash})...`)
+    const tx1 = await root
+      .connect(await ethers.getSigner(owner))
+      .setSubnodeOwner(labelHash('reverse'), owner)
+    await tx1.wait()
+  } else {
+    const tx1 = await registry
+      .connect(await ethers.getSigner(owner))
+      .setSubnodeOwner(ZERO_HASH, labelHash('reverse'), owner)
+    await tx1.wait()
+  }
+  console.log(`Owner of .reverse set to owner`)
 
   const tx2 = await registry
     .connect(await ethers.getSigner(owner))
@@ -47,9 +55,6 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 
 func.id = 'reverse-registrar'
 func.tags = ['ReverseRegistrar']
-func.dependencies = [
-  // 'Root',
-  'ENSRegistry',
-]
+func.dependencies = ['root', 'ENSRegistry']
 
 export default func

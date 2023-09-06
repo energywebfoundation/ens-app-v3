@@ -5,14 +5,14 @@ import { HardhatRuntimeEnvironment } from 'hardhat/types'
 const ZERO_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  const { getNamedAccounts, deployments } = hre
+  const { getNamedAccounts, deployments, network } = hre
   const { deploy } = deployments
   const { owner, deployer } = await getNamedAccounts()
   console.log(`owner ${owner}, deployer ${deployer}`)
 
-  // if (!network.tags.use_root) {
-  //   return true
-  // }
+  if (!network.tags.use_root) {
+    return true
+  }
 
   const registry = await ethers.getContract('ENSRegistry', await ethers.getSigner(owner))
 
@@ -44,7 +44,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 func.id = 'root'
-func.tags = ['Root']
+func.tags = ['root', 'Root']
 func.dependencies = ['ENSRegistry']
 
 export default func
