@@ -1,8 +1,6 @@
 import '@rainbow-me/rainbowkit/styles.css'
 import { DefaultOptions, QueryClient } from '@tanstack/react-query'
-import { Address, Chain, ChainProviderFn, configureChains, createClient } from 'wagmi'
-import { goerli, localhost, mainnet } from 'wagmi/chains'
-import { infuraProvider } from 'wagmi/providers/infura'
+import { Address, Chain, configureChains, createClient } from 'wagmi'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 
 import { makePersistent } from '@app/utils/persist'
@@ -10,7 +8,6 @@ import { makePersistent } from '@app/utils/persist'
 import { WC_PROJECT_ID } from './constants'
 import { getDefaultWallets } from './getDefaultWallets'
 
-const providerArray: ChainProviderFn<typeof mainnet | typeof goerli | typeof localhost>[] = []
 const NEXT_PUBLIC_DEPLOYMENT_ADDRESSES = process.env.NEXT_PUBLIC_DEPLOYMENT_ADDRESSES
 if (!NEXT_PUBLIC_DEPLOYMENT_ADDRESSES) {
   throw new Error('Deployment addresses are not set')
@@ -105,54 +102,14 @@ export const hardhat: Chain = {
   },
   contracts,
 }
-if (process.env.NEXT_PUBLIC_PROVIDER) {
-  // for local testing
-  providerArray.push(
-    jsonRpcProvider({
-      rpc: () => ({ http: process.env.NEXT_PUBLIC_PROVIDER! }),
-    }),
-  )
-} else {
-  if (!process.env.NEXT_PUBLIC_IPFS) {
-    // only use infura if we are not using IPFS
-    // since we don't want to allow all domains to access infura
-    providerArray.push(
-      infuraProvider({
-        apiKey: process.env.NEXT_PUBLIC_INFURA_KEY || 'cfa6ae2501cc4354a74e20432507317c',
-      }),
-    )
-  }
-  // fallback cloudflare gateway if infura is down or for IPFS
-  providerArray.push(
-    jsonRpcProvider({
-      rpc: (c) => ({
-        http: `https://web3.ens.domains/v1/${c.network === 'homestead' ? 'mainnet' : c.network}`,
-      }),
-    }),
-  )
-}
 
-const ewcProvider = jsonRpcProvider({
-  rpc: () => ({
-    http: 'https://rpc.energyweb.org/',
+const jsonProvider = jsonRpcProvider({
+  rpc: (chain) => ({
+    http: chain.rpcUrls.public.http[0] || chain.rpcUrls.default.http[0],
   }),
 })
 
-const voltaProvider = jsonRpcProvider({
-  rpc: () => ({
-    http: 'https://volta-rpc.energyweb.org/',
-  }),
-})
-
-const hardhatProvider = jsonRpcProvider({
-  rpc: () => ({
-    http: 'http://localhost:8545/',
-  }),
-})
-const { provider, chains } = configureChains(
-  [volta, ewc, hardhat],
-  [voltaProvider, ewcProvider, hardhatProvider],
-)
+const { provider, chains } = configureChains([volta, ewc, hardhat], [jsonProvider])
 
 const connectors = getDefaultWallets({
   appName: 'ENS',
