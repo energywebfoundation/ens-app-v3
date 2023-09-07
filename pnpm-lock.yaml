@@ -21,7 +21,7 @@ overrides:
 
 patchedDependencies:
   '@ensdomains/ensjs@3.0.0-alpha.65':
-    hash: 4r4s4zvj3dck3mbqlicjl6vly4
+    hash: dmxxokp4emtwmxehpnkkm6j3u4
     path: patches/@ensdomains__ensjs@3.0.0-alpha.65.patch
   '@rainbow-me/rainbowkit@0.12.15':
     hash: ids4vnpwyenrujupancx6kn4ci
@@ -60,7 +60,7 @@ importers:
         version: 0.1.0
       '@ensdomains/ensjs':
         specifier: 3.0.0-alpha.65
-        version: 3.0.0-alpha.65(patch_hash=4r4s4zvj3dck3mbqlicjl6vly4)(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1)
+        version: 3.0.0-alpha.65(patch_hash=dmxxokp4emtwmxehpnkkm6j3u4)(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1)
       '@ensdomains/eth-ens-namehash':
         specifier: ^2.0.15
         version: 2.0.15
@@ -2338,7 +2338,7 @@ packages:
       - bufferutil
       - utf-8-validate
 
-  /@ensdomains/ensjs@3.0.0-alpha.65(patch_hash=4r4s4zvj3dck3mbqlicjl6vly4)(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1):
+  /@ensdomains/ensjs@3.0.0-alpha.65(patch_hash=dmxxokp4emtwmxehpnkkm6j3u4)(@ethersproject/abi@5.6.4)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/bytes@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/keccak256@5.7.0)(@ethersproject/providers@5.6.8)(@ethersproject/solidity@5.7.0)(@ethersproject/strings@5.7.0)(@ethersproject/transactions@5.7.0)(@ethersproject/web@5.7.1):
     resolution: {integrity: sha512-49aV28uoQ4ducM0GAl2HxPHyc0lY3Gd8eAuBJrWnGVJTMBZ5q1wnT0YsSGiPB2VZ2Q07D/5vsP3NzavbpK+jIg==}
     peerDependencies:
       '@ethersproject/abi': ^5.6.4
