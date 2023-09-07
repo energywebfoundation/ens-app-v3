@@ -1,55 +1,73 @@
 diff --git a/dist/cjs/contracts/getContractAddress.js b/dist/cjs/contracts/getContractAddress.js
-index 3f448ea026805a9e01ae88241114d08254887c6c..cd6cf674bc9706fd690c0e7fdaba7dc9dfbdfda8 100644
+index 3f448ea026805a9e01ae88241114d08254887c6c..0be122d2e49ebe6ac06c993914bf59bd0a1868de 100644
 --- a/dist/cjs/contracts/getContractAddress.js
 +++ b/dist/cjs/contracts/getContractAddress.js
-@@ -24,7 +24,8 @@ module.exports = __toCommonJS(getContractAddress_exports);
+@@ -24,7 +24,10 @@ module.exports = __toCommonJS(getContractAddress_exports);
  const addresses = {
    BaseRegistrarImplementation: {
      "1": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
 -    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
 +    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
-+    "11155111": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
++    "11155111": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
++    "73799": "0x5630EBDbf41624fF77DcBfC4518c867D93E42E9f",
++    "246": "0x3BDA3EE55a5b43493BA05468d0AE5A5fF916252f"
    },
    DNSRegistrar: {
      "1": "0x58774Bb8acD458A640aF0B88238369A167546ef2",
-@@ -32,32 +33,39 @@ const addresses = {
+@@ -32,32 +35,54 @@ const addresses = {
    },
    ETHRegistrarController: {
      "1": "0x253553366Da8546fC250F225fe3d25d0C782303b",
 -    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734"
 +    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734",
-+    "11155111": "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"
++    "11155111": "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72",
++    "73799": "0xb842CCA1682DC2Ee6A9da6A59bA4B5C736b229cD",
++    "246": "0x9C99a28D3d702E6096361Ff31E724b772B5D709e"
++  },
++  Multicall: {
++    "1": "0xcA11bde05977b3631167028862bE2a173976CA11",
++    "5": "0xcA11bde05977b3631167028862bE2a173976CA11",
++    "11155111": "0xcA11bde05977b3631167028862bE2a173976CA11",
++    "73799": "0x5624547a7Af0881dDF508978C2b427155a2D9426"
    },
-   Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11",
+-  Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11",
    NameWrapper: {
      "1": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
 -    "5": "0x114D4603199df73e7D157787f8778E21fCd13066"
 +    "5": "0x114D4603199df73e7D157787f8778E21fCd13066",
-+    "11155111": "0x0635513f179D50A207757E05759CbD106d7dFcE8"
++    "11155111": "0x0635513f179D50A207757E05759CbD106d7dFcE8",
++    "73799": "0x3e7AC7190374C6dF68b4293D127929C48CD92C86"
    },
    PublicResolver: {
      "1": "0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63",
 -    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750"
 +    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750",
-+    "11155111": "0x8FADE66B79cC9f707aB26799354482EB93a5B7dD"
++    "11155111": "0x8FADE66B79cC9f707aB26799354482EB93a5B7dD",
++    "73799": "0x0a97e07c4Df22e2e31872F20C5BE191D5EFc4680",
++    "246": "0xA517983Bd4Af4DF0Ed9b52DA4BC405d0A95eE7E2"
    },
    ENSRegistry: {
      "1": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
 -    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e"
 +    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
-+    "11155111": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
++    "11155111": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
++    "73799": "0xd7CeF70Ba7efc2035256d828d5287e2D285CD1ac",
++    "246": "0x0A6d64413c07E10E890220BBE1c49170080C6Ca0"
    },
    ReverseRegistrar: {
      "1": "0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb",
 -    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856"
 +    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856",
-+    "11155111": "0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6"
++    "11155111": "0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6",
++    "73799": "0xff7Befa016689dC5D89165867a65CF26B73e6514",
++    "246": "0xcB9BCAa8010F51D6484570B99B127e8a26B6B468"
    },
    UniversalResolver: {
      "1": "0xc0497e381f536be9ce14b0dd3817cbcae57d2f62",
 -    "5": "0x56522d00c410a43bffdf00a9a569489297385790"
 +    "5": "0x56522d00c410a43bffdf00a9a569489297385790",
-+    "11155111": "0x21B000Fd62a880b2125A61e36a284BB757b76025"
++    "11155111": "0x21B000Fd62a880b2125A61e36a284BB757b76025",
++    "73799": "0xd4281a0BFd1b336Baf0eCbBF3a552ec9aD0d19dc"
    },
    BulkRenewal: {
      "1": "0xa12159e5131b1eEf6B4857EEE3e1954744b5033A",
@@ -279,57 +297,75 @@ index 4e8efd3efbe57aad40994367aba3bb69318e907f..a20d05afbb5a1aad72831592605bc6a4
      if (!(expResponse == null ? void 0 : expResponse.expiry))
        throw new Error("Couldn't get expiry for name, please provide one.");
 diff --git a/dist/esm/contracts/getContractAddress.mjs b/dist/esm/contracts/getContractAddress.mjs
-index 39c8d2b4fecb42ef27ed6569ca7e95b3bec49e70..d92e442d11a63e4341ff3f9e90cd48fb0d9173e2 100644
+index 39c8d2b4fecb42ef27ed6569ca7e95b3bec49e70..a12d5811db77b1bd8e84b9d19a861d43ae1fc68d 100644
 --- a/dist/esm/contracts/getContractAddress.mjs
 +++ b/dist/esm/contracts/getContractAddress.mjs
-@@ -2,7 +2,8 @@
+@@ -2,7 +2,10 @@
  var addresses = {
    BaseRegistrarImplementation: {
      "1": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
 -    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
 +    "5": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
-+    "11155111": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
++    "11155111": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",
++    "73799": "0x5630EBDbf41624fF77DcBfC4518c867D93E42E9f",
++    "246": "0x3BDA3EE55a5b43493BA05468d0AE5A5fF916252f"
    },
    DNSRegistrar: {
      "1": "0x58774Bb8acD458A640aF0B88238369A167546ef2",
-@@ -10,32 +11,39 @@ var addresses = {
+@@ -10,32 +13,54 @@ var addresses = {
    },
    ETHRegistrarController: {
      "1": "0x253553366Da8546fC250F225fe3d25d0C782303b",
 -    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734"
 +    "5": "0xCc5e7dB10E65EED1BBD105359e7268aa660f6734",
-+    "11155111": "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72"
++    "11155111": "0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72",
++    "73799": "0xb842CCA1682DC2Ee6A9da6A59bA4B5C736b229cD",
++    "246": "0x9C99a28D3d702E6096361Ff31E724b772B5D709e"
++  },
++  Multicall: {
++    "1": "0xcA11bde05977b3631167028862bE2a173976CA11",
++    "5": "0xcA11bde05977b3631167028862bE2a173976CA11",
++    "11155111": "0xcA11bde05977b3631167028862bE2a173976CA11",
++    "73799": "0x5624547a7Af0881dDF508978C2b427155a2D9426"
    },
-   Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11",
+-  Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11",
    NameWrapper: {
      "1": "0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401",
 -    "5": "0x114D4603199df73e7D157787f8778E21fCd13066"
 +    "5": "0x114D4603199df73e7D157787f8778E21fCd13066",
-+    "11155111": "0x0635513f179D50A207757E05759CbD106d7dFcE8"
++    "11155111": "0x0635513f179D50A207757E05759CbD106d7dFcE8",
++    "73799": "0x3e7AC7190374C6dF68b4293D127929C48CD92C86"
    },
    PublicResolver: {
      "1": "0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63",
 -    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750"
 +    "5": "0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750",
-+    "11155111": "0x8FADE66B79cC9f707aB26799354482EB93a5B7dD"
++    "11155111": "0x8FADE66B79cC9f707aB26799354482EB93a5B7dD",
++    "73799": "0x0a97e07c4Df22e2e31872F20C5BE191D5EFc4680",
++    "246": "0xA517983Bd4Af4DF0Ed9b52DA4BC405d0A95eE7E2"
    },
    ENSRegistry: {
      "1": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
 -    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e"
 +    "5": "0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e",
-+    "11155111": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e"
++    "11155111": "0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e",
++    "73799": "0xd7CeF70Ba7efc2035256d828d5287e2D285CD1ac",
++    "246": "0x0A6d64413c07E10E890220BBE1c49170080C6Ca0"
    },
    ReverseRegistrar: {
      "1": "0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb",
 -    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856"
 +    "5": "0x4f7A657451358a22dc397d5eE7981FfC526cd856",
-+    "11155111": "0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6"
++    "11155111": "0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6",
++    "73799": "0xff7Befa016689dC5D89165867a65CF26B73e6514",
++    "246": "0xcB9BCAa8010F51D6484570B99B127e8a26B6B468"
    },
    UniversalResolver: {
      "1": "0xc0497e381f536be9ce14b0dd3817cbcae57d2f62",
 -    "5": "0x56522d00c410a43bffdf00a9a569489297385790"
 +    "5": "0x56522d00c410a43bffdf00a9a569489297385790",
-+    "11155111": "0x21B000Fd62a880b2125A61e36a284BB757b76025"
++    "11155111": "0x21B000Fd62a880b2125A61e36a284BB757b76025",
++    "73799": "0xd4281a0BFd1b336Baf0eCbBF3a552ec9aD0d19dc"
    },
    BulkRenewal: {
      "1": "0xa12159e5131b1eEf6B4857EEE3e1954744b5033A",
@@ -568,12 +604,12 @@ index 63550f5a58f452a257ccfe891c657cf014d7a110..f4cebe30263ff30fe76c0788364efa94
      if (!expResponse?.expiry)
        throw new Error("Couldn't get expiry for name, please provide one.");
 diff --git a/dist/types/contracts/types.d.ts b/dist/types/contracts/types.d.ts
-index 73888516bf1fc63986883742b937110962922c83..c3a8c571ad69ab0306ab124eaaca9e03c7652e8e 100644
+index 73888516bf1fc63986883742b937110962922c83..378e23ad8f94f48a4d4e0f779dda5b489444f2ee 100644
 --- a/dist/types/contracts/types.d.ts
 +++ b/dist/types/contracts/types.d.ts
 @@ -1,2 +1,2 @@
 -export declare type SupportedNetworkId = '1' | '3' | '4' | '5' | '1337';
-+export declare type SupportedNetworkId = '1' | '5' | '11155111' | '1337';
++export declare type SupportedNetworkId = '1' | '5' | '11155111' | '1337' | '73799' | '246';
  export declare type ContractName = 'BaseRegistrarImplementation' | 'ETHRegistrarController' | 'Multicall' | 'NameWrapper' | 'DNSRegistrar' | 'PublicResolver' | 'ENSRegistry' | 'ReverseRegistrar' | 'UniversalResolver' | 'BulkRenewal';
 diff --git a/dist/types/utils/consts.d.ts b/dist/types/utils/consts.d.ts
 index a438ff78ed8909a965e52d86d40353ed71350f83..f4f449507842866becdbd6e84bc9cab4e7370210 100644
@@ -585,48 +621,66 @@ index a438ff78ed8909a965e52d86d40353ed71350f83..f4f449507842866becdbd6e84bc9cab4
  export declare const MINIMUM_DOT_ETH_CHARS = 3;
 +export declare const TLD = "ewc";
 diff --git a/src/contracts/getContractAddress.ts b/src/contracts/getContractAddress.ts
-index feb39779f4bbdaac41faadc9681d71cc93b44b8d..ffd380f6abee0d05f31ffc85237a6ceefd8e61c6 100644
+index feb39779f4bbdaac41faadc9681d71cc93b44b8d..c08884037f1ef6919e82feb44d23be577be71c52 100644
 --- a/src/contracts/getContractAddress.ts
 +++ b/src/contracts/getContractAddress.ts
-@@ -8,6 +8,7 @@ const addresses: Record<
+@@ -8,6 +8,9 @@ const addresses: Record<
    BaseRegistrarImplementation: {
      '1': '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
      '5': '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
 +    '11155111': '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
++    '73799': '0x5630EBDbf41624fF77DcBfC4518c867D93E42E9f',
++    '246': '0x3BDA3EE55a5b43493BA05468d0AE5A5fF916252f',
    },
    DNSRegistrar: {
      '1': '0x58774Bb8acD458A640aF0B88238369A167546ef2',
-@@ -16,31 +17,38 @@ const addresses: Record<
+@@ -16,31 +19,53 @@ const addresses: Record<
    ETHRegistrarController: {
      '1': '0x253553366Da8546fC250F225fe3d25d0C782303b',
      '5': '0xCc5e7dB10E65EED1BBD105359e7268aa660f6734',
 +    '11155111': '0xFED6a969AaA60E4961FCD3EBF1A2e8913ac65B72',
++    '73799': '0xb842CCA1682DC2Ee6A9da6A59bA4B5C736b229cD',
++    '246': '0x9C99a28D3d702E6096361Ff31E724b772B5D709e',
++  },
++  Multicall: {
++    '1': '0xcA11bde05977b3631167028862bE2a173976CA11',
++    '5': '0xcA11bde05977b3631167028862bE2a173976CA11',
++    '11155111': '0xcA11bde05977b3631167028862bE2a173976CA11',
++    '73799': '0x5624547a7Af0881dDF508978C2b427155a2D9426',
    },
-   Multicall: '0xcA11bde05977b3631167028862bE2a173976CA11',
+-  Multicall: '0xcA11bde05977b3631167028862bE2a173976CA11',
    NameWrapper: {
      '1': '0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401',
      '5': '0x114D4603199df73e7D157787f8778E21fCd13066',
 +    '11155111': '0x0635513f179D50A207757E05759CbD106d7dFcE8',
++    '73799': '0x3e7AC7190374C6dF68b4293D127929C48CD92C86',
    },
    PublicResolver: {
      '1': '0x231b0Ee14048e9dCcD1d247744d114a4EB5E8E63',
      '5': '0xd7a4F6473f32aC2Af804B3686AE8F1932bC35750',
 +    '11155111': '0x8FADE66B79cC9f707aB26799354482EB93a5B7dD',
++    '73799': '0x0a97e07c4Df22e2e31872F20C5BE191D5EFc4680',
++    '246': '0xA517983Bd4Af4DF0Ed9b52DA4BC405d0A95eE7E2',
    },
    ENSRegistry: {
      '1': '0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e',
      '5': '0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e',
 +    '11155111': '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
++    '73799': '0xd7CeF70Ba7efc2035256d828d5287e2D285CD1ac',
++    '246': '0x0A6d64413c07E10E890220BBE1c49170080C6Ca0',
    },
    ReverseRegistrar: {
      '1': '0xa58E81fe9b61B5c3fE2AFD33CF304c454AbFc7Cb',
      '5': '0x4f7A657451358a22dc397d5eE7981FfC526cd856',
 +    '11155111': '0xA0a1AbcDAe1a2a4A2EF8e9113Ff0e02DD81DC0C6',
++    '73799': '0xff7Befa016689dC5D89165867a65CF26B73e6514',
++    '246': '0xcB9BCAa8010F51D6484570B99B127e8a26B6B468',
    },
    UniversalResolver: {
      '1': '0xc0497e381f536be9ce14b0dd3817cbcae57d2f62',
      '5': '0x56522d00c410a43bffdf00a9a569489297385790',
 +    '11155111': '0x21B000Fd62a880b2125A61e36a284BB757b76025',
++    '73799': '0xd4281a0BFd1b336Baf0eCbBF3a552ec9aD0d19dc',
    },
    BulkRenewal: {
      '1': '0xa12159e5131b1eEf6B4857EEE3e1954744b5033A',
@@ -636,12 +690,18 @@ index feb39779f4bbdaac41faadc9681d71cc93b44b8d..ffd380f6abee0d05f31ffc85237a6cee
    /* eslint-enable @typescript-eslint/naming-convention */
  }
 diff --git a/src/contracts/types.ts b/src/contracts/types.ts
-index 41e9634354896195833d93e8c8a1dce9564ea95d..118dec2ad70386d4c33de6b57e90ae7e61915b14 100644
+index 41e9634354896195833d93e8c8a1dce9564ea95d..afdeb9f86150a29a569ef1828195d6c574c20edb 100644
 --- a/src/contracts/types.ts
 +++ b/src/contracts/types.ts
-@@ -1,4 +1,4 @@
+@@ -1,4 +1,10 @@
 -export type SupportedNetworkId = '1' | '3' | '4' | '5' | '1337'
-+export type SupportedNetworkId = '1' | '5' | '11155111' | '1337'
++export type SupportedNetworkId =
++  | '1'
++  | '5'
++  | '11155111'
++  | '1337'
++  | '73799'
++  | '246'
  
  export type ContractName =
    | 'BaseRegistrarImplementation'
